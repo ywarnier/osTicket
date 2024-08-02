@@ -196,6 +196,11 @@ return array(
         "name" => "French",
         "nativeName" => "français, langue française"
     ),
+    "fr" => array(
+        "name" => "French",
+        "flag" => "BE",
+        "nativeName" => "français, langue française"
+    ),
     "ff" => array(
         "name" => "Fula; Fulah; Pulaar; Pular",
         "nativeName" => "Fulfulde, Pulaar, Pular"
