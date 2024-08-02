@@ -1,0 +1,49 @@
+#This is popup help messages for the Admin Panel -> Settings -> Agents
+#Fields:
+#title - Shown in bold at the top of the popover window
+#content - The body of the help popover
+#links - List of links shows below the content
+#title - Link title
+#href - href of link (links starting with / are translated to the
+#helpdesk installation path)
+#The key names such as 'helpdesk_name' should not be translated as they
+#must match the HTML #ids put into the page template.
+#General Settings
+---
+agent_name_format:
+  title: Format pour le nom des agents
+  content: >
+    Choisissez un format pour le nom des agents sur l'ensemble du système. Les gabarits des messages de courriel l'utiliseront si un autre format n'est pas spécifié.
+staff_identity_masking:
+  title: Masquer l'identité du personnel
+  content: >
+    Si activée, cette option cachera les noms des agents aux clients pendant les échanges.
+disable_agent_collabs:
+  title: Désactiver les collaborateurs de l'agent
+  content: >
+    Si activé, les agents ajoutés comme collaborateurs par les utilisateurs seront désactivés. C'est utile quand les utilisateurs ajoutent aveuglément des agents dans le champs CC entrainant la réception par les agents de toutes les notifications de participation. <br><br> <strong>Note:</strong> <br> Ce paramètre est global pour tous les tickets utilisateurs créés par API, Piping et Fetching.
+#Authentication settings
+agent_password_policy:
+  title: Politique de gestion des mots de passe
+  content: >
+    Choisissez une <span class="doc-desc-title">politique de mots de passe</span> pour les <span class="doc-desc-title">Agents</span>. <br><br> D'autres politiques peuvent être ajoutées en installant des extensions de <span class="doc-desc-title">politique de mots de passe</span>.
+allow_password_resets:
+  title: Autoriser la réinitialisation de mot de passe
+  content: >
+    Activez cette option si vous souhaitez afficher le lien <span class="doc-desc-title">Mot de passe oublié</span> sur la page <span class="doc-desc-title">Authentification des agents</span> quand une tentative de connexion a échoué.
+reset_token_expiration:
+  title: Fenêtre de réinitialisation de mot de passe
+  content: >
+    Définissez la durée de validité (en minutes) des <span class="doc-desc-title">Demandes de réinitialisation des mots de passe</span>. Lorsqu'un Agent <span class="doc-desc-title">réinitialise son mot de passe</span> un email avec un lien unique lui est envoyé pour finaliser la procédure.
+staff_session_timeout:
+  title: Durée de la session
+  content: >
+    Choisissez la durée maximale d'inactivité (en minute) avant qu'un agent soit obligé de se reconnecter.<br><br> Si vous souhaitez désactiver la <span class="doc-desc-title">Durée de session du service des agents</span> entrez 0.
+bind_staff_session_to_ip:
+  title: Lier la session de l'Agent à IP
+  content: >
+    Activez cette option si vous voulez que vos agents soient mémorisés par leurs adresses IP lors de leurs connexions. <br><br> Cette option n'est pas recommandée pour les utilisateurs qui obtiennent leur adresse IP dynamiquement.
+require_agent_2fa:
+  title: Nécessite l'Authentification à Deux Facteurs
+  content: >
+    Activez cette fonctionnalité si vous souhaitez ajouter un niveau de sécurité lors de la connexion des Agents dans le helpdesk. Une fois qu'ils ont soumis leur identifiant et leur mot de passe avec succès, ils devront rentrer un code pour compléter la connexion au helpdesk.

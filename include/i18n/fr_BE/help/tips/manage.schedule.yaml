@@ -1,0 +1,16 @@
+#This is popup help messages for the Admin Panel -> Manage -> Schedules
+#Fields:
+#title - Shown in bold at the top of the popover window
+#content - The body of the help popover
+#links - List of links shows below the content
+#title - Link title
+#href - href of link (links starting with / are translated to the
+#helpdesk installation path)
+#The key names such as 'helpdesk_name' should not be translated as they
+#must match the HTML #ids put into the page template.
+---
+schedule:
+  title: Definition
+  content: >
+    <b>Nom</b>: Nom unique pour ce planning. <hr> <b>Type</b>: Choisir le type de planning. <span class="doc-desc-title">Heures de bureau</span> définit les heures comptées dans le calcul des heures SLA, tandis que les <span class="doc-desc-title">Heures de fermeture</span> définit les heures exclues. <hr> <b>Fuseau horaire</b>: Choisir le fuseau horaire du planning. Il est recommandé que vous le laissiez vide pour un fuseau horaire<span class="doc-desc-title">flottant</span>. <br><br> Les fuseaux horaires flottants permettent aux heures d'être relatives au fuseau horaire au moment de leur utilisation.
+

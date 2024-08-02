@@ -1,0 +1,9 @@
+#banner-client.yaml
+#This forms the header on the staff login page. It can be useful to inform
+#your clients about your login and registration policies.
+---
+notes: >
+  Ceci concerne l'en-tête de la page de connexion du Client. Cela peut être utile pour informer vos clients sur vos politiques d'inscription et de connexion.
+name: "Connectez-vous à %{company.name}"
+body: >
+  Afin de pouvoir mieux les servir, nous encourageons nos Clients à ouvrir un compte.

@@ -1,0 +1,107 @@
+#This is popup help messages for the Admin Panel -> Emails -> Add New Email
+#Fields:
+#title - Shown in bold at the top of the popover window
+#content - The body of the help popover
+#links - List of links shows below the content
+#title - Link title
+#href - href of link (links starting with / are translated to the
+#helpdesk installation path)
+#The key names such as 'helpdesk_name' should not be translated as they
+#must match the HTML #ids put into the page template.
+---
+new_ticket_help_topic:
+  title: Nouvelle rubrique d'aide
+  content: >
+    Choisissez un <span class="doc-desc-title">une rubrique</span> pour être automatique associé avec les billets créés via ce courriel. <br/><br/> Les champs associés avec cette rubrique seront ajoutés à ce billet, mais n'auront pas de données.
+  links:
+    - 
+      title: Gérer les rubriques d'aide
+      href: /scp/helptopics.php
+new_ticket_priority:
+  title: Nouvelle priorité de billet
+  content: >
+    Choisissez la <span class="doc-desc-title"> priorité</span> pour les nouveaux billets créés via le courriel.
+new_ticket_department:
+  title: Nouveau billet service
+  content: >
+    Choisissez le <span class="doc-desc-title">service</span> auquel les nouveaux billets créés via ce courriel seront acheminés.
+  links:
+    - 
+      title: Gérer les services
+      href: /scp/departments.php
+auto_response:
+  title: Réponse automatique à la création d'un billet
+  content: >
+    Vous pouvez désactiver la réponse automatique envoyée à l'utilisateur lorsqu'un nouveau billet est créé via cette adresse.
+userid:
+  title: Nom d'utilisateur
+  content: >
+    Le nom d'utilisateur est utilisé dans le processus d'authentification par email. Nous acceptons les chaînes de caractères avec une seule adresse, boîtes mails partagées, nom du serveur + nom d'utilisateur, et une combinaisons de tous.
+  links:
+    - 
+      title: Plus d'informations
+      href: https://docs.osticket.com/en/latest/Admin/Emails/Emails.html
+username:
+  title: Nom d'utilisateur
+  content: >
+
+password:
+  title: Mot de passe
+  content: >
+
+login_information:
+  title: Informations de connexion par courriel
+  content: >
+    Le <span class="doc-desc-title">nom d'utilisateur</span> et le <span class="doc-desc-title">mot de passe</span> sont nécessaires pour extraire des courriels via IMAP / POP aussi pour envoyer des courriels via SMTP.
+mail_account:
+  title: Récupération de courriel
+  content: >
+    Extrayez les courriels d'une boîte aux lettres IMAP ou POP distante et convertissez-les en billets dans votre service d'assistance.
+  links:
+    - 
+      title: Gérer les paramètres des<span class="doc-desc-title"> listes de courriels </span> &amp; <span class="doc-desc-title">autoCron</span>.
+      href: /scp/settings.php?t=emails
+host_and_port:
+  title: Hôte distant
+  content: >
+    Enter the <span class="doc-desc-title">hostname</span> and <span class="doc-desc-title">port</span> number for your mail server. This may be available in the documentation for your hosting account or from your email administrator. <br/><br/> If using non-standard <span class="doc-desc-title">port</span> number with <span class="doc-desc-title">encryption</span> enabled then prefix the hostname with ssl:// or tls:// scheme to hint to supported encryption. <br/><br/> To force a plain connection even when using a standard encryption <span class="doc-desc-title">port</span> then use plain:// scheme.
+mailbox_folder:
+  title: Dossier mail
+  content: >
+    Enter the <span class="doc-desc-title">Folder</span> name that you wish to fetch mail from. If left empty the system will fetch from the INBOX.
+protocol:
+  title: Protocole de messagerie
+  content: >
+    Select the mail box protocol supported by your remote mail server. IMAP on a secure port highly recommended.
+authentication:
+  title: Authentification
+  content: >
+    osTicket  <span class="doc-desc-title">OAuth2 Plugin</span> is required for Modern Authentication support.
+  links:
+    - 
+      title: Download osTicket Plugins
+      href: https://osticket.com/download/
+fetch_frequency:
+  title: Fréquence de requête
+  content: >
+    Entrez la fréquence, en minutes, le système interroge la boîte aux lettres. <br/> <br/> Cela définira le retard moyen en recevant une réponse automatique après qu'un utilisateur envoie un courriel à cette boîte aux lettres.
+emails_per_fetch:
+  title: Courriels par requête
+  content: >
+    Entrez le nombre de courriels traités simultanément.
+fetched_emails:
+  title: Extraits de courriels
+  content: >
+    Faites un choix pour les messages transformés : <br/> <br/> <span class="doc-desc-opt"> <b>déplacer vers un dossier</b></span> : cette option va sauvegarder les messages dans la boîte de réception vers un dossier que vous spécifiez. Si le dossier n'existe pas encore sur le serveur, le système tentera de le créer automatiquement. (<b>Recommandé</b>) <hr><span class="doc-desc-opt"> <b>Supprimer des courriels</b></span> : cette option va supprimer les messages dans la boîte de réception une fois qu'il est traité. <hr><span class="doc-desc-opt"> <b>Ne rien faire</b></span> : cette option laissera les messages dans votre boîte de réception. Le système enregistre les ID de message de votre courriel et va tenter d'extraire le contenu. Toutefois, cette option peut provoquer des billets en double. (<em>Non recommandé</em>)
+smtp_settings:
+  title: Paramètres SMTP
+  content: >
+    Courriel envoyé par le service d'assistance peut être envoyé via un serveur SMTP. Ceci est recommandé, si possible, car il permettra d'augmenter la probabilité de livraison de courriels et fera les courriels moins susceptibles d'être marqués comme spam.
+header_spoofing:
+  title: Permettre une usurpation d'en-tête
+  content: >
+    Cocher pour permettre l'envoi de courriels via cette messagerie provenant d'une adresse autre que celle donnée dans le paramétrage de <span class="doc-desc-title">courriel</span> ci-dessus. <br/> <br/> Ce  paramètre est généralement utilisée lors de l'envoi de courriel d'alias de cette boîte aux lettres.
+strict_matching:
+  title: Strict Email Matching
+  content: >
+    <b>Enable</b> this option to require the Email Address and the Token's Resource Owner to match. This is useful for preventing accidental authorization of a completely different account. <br><br> <b>Disable</b> this option to allow a different Resource Owner for the Token than the Email Address. This is useful for Shared Mailboxes/Aliases/etc. where you need to use a Service Account or Global Admin to authorize on behalf of the email.

@@ -1,0 +1,31 @@
+#This is popup help messages for the Admin Panel -> Dashboard  -> Audit Logs page
+#Fields:
+#title - Shown in bold at the top of the popover window
+#content - The body of the help popover
+#links - List of links shows below the content
+#title - Link title
+#href - href of link (links starting with / are translated to the
+#helpdesk installation path)
+#The key names such as 'helpdesk_name' should not be translated as they
+#must match the HTML #ids put into the page template.
+---
+audit_logs:
+  title: Journaux d'audits
+  content: >
+    C'est ici que vous pourrez trouver toutes les activités écrites dans le journal d'audit quand l'extension Audit est activée
+  links:
+    - 
+      title: Configurer les extensions
+      href: /scp/plugins.php
+date_span:
+  title: Période
+  content: >
+    Sélectionner l'intervalle de temps que vous voulez voir dans le <span class="doc-desc-title">journal d'audit</span>.
+type:
+  title: Type
+  content: >
+    Choisissez quels types d'objets que voudriez voir dans le journal d'audit.
+events:
+  title: Évènements
+  content: >
+    Filtrer les résultats selon un évènement spécifique
