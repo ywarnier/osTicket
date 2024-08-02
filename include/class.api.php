@@ -339,7 +339,7 @@ class ApiController extends Controller {
     /**
      * API error & logging and response!
      *
-     * final - don not override downstream.
+     * final - do not override downstream.
      */
     final public function onError($code, $error, $title = null,
             $logOnly = false) {
