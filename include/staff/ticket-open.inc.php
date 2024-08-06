@@ -249,7 +249,7 @@ if ($_POST)
                 &nbsp;<font class="error"><b>*</b>&nbsp;<?php echo $errors['topicId']; ?></font>
             </td>
         </tr>
-        <tr>
+        <!--tr>
             <td width="160">
                 <?php echo __('Department'); ?>:
             </td>
@@ -273,7 +273,7 @@ if ($_POST)
                 </select>
                 &nbsp;<font class="error"><?php echo $errors['deptId']; ?></font>
             </td>
-        </tr>
+        </tr-->
 
          <tr>
             <td width="160">
