@@ -146,7 +146,7 @@ if ($_POST)
             </tr>
             <?php
           } ?>
-          <tr id="ccRow">
+          <!--tr id="ccRow">
             <td width="160"><?php echo __('Cc'); ?>:</td>
             <td>
               <span>
@@ -166,7 +166,7 @@ if ($_POST)
 
             <br/><span class="error"><?php echo $errors['ccs']; ?></span>
           </td>
-        </tr>
+        </tr-->
         <?php
         if ($cfg->notifyONNewStaffTicket()) {
          ?>
