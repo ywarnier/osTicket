@@ -275,7 +275,7 @@ if ($_POST)
             </td>
         </tr-->
 
-         <tr>
+         <!--tr>
             <td width="160">
                 <?php echo __('SLA Plan');?>:
             </td>
@@ -293,7 +293,7 @@ if ($_POST)
                 </select>
                 &nbsp;<font class="error">&nbsp;<?php echo $errors['slaId']; ?></font>
             </td>
-         </tr>
+         </tr-->
 
          <tr>
             <td width="160">
