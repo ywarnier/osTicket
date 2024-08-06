@@ -197,7 +197,7 @@ if ($_POST)
             <td>
                 <select name="source">
                     <?php
-                    $source = $info['source'] ?: 'Phone';
+                    $source = $info['source'] ?: 'In person';
                     $sources = Ticket::getSources();
                     unset($sources['Web'], $sources['API']);
                     foreach ($sources as $k => $v)

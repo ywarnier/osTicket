@@ -3300,6 +3300,7 @@ utilisées pour générer des séquences à des fins différentes.',
   'week' . "\0" . 'weeks' => 'semaine' . "\0" . 'semaine',
   'yesterday' => 'hier',
   'you' => 'vous',
+  'In person' => 'Présentiel',
   0 => 
   array (
     'Revision' => 0,
