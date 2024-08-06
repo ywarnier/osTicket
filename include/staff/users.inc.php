@@ -24,7 +24,7 @@ if ($_REQUEST['query']) {
 
 $sortOptions = array('name' => 'name',
                      'email' => 'emails__address',
-                     'status' => 'account__status',
+                     //'status' => 'account__status',
                      'create' => 'created',
                      'update' => 'updated');
 $orderWays = array('DESC'=>'-','ASC'=>'');
@@ -57,8 +57,30 @@ $qstr.='&amp;order='.($order=='-' ? 'ASC' : 'DESC');
 //echo $query;
 $_SESSION[':Q:users'] = $users;
 
-$users->values('id', 'name', 'default_email__address', 'account__id',
-    'account__status', 'created', 'updated');
+$users->values('id',
+    'name',
+    'default_email__address',
+    'account__id',
+    //'account__status',
+    'created',
+    'updated');
+
+$users_columns = preg_split('/:/', USERS_COLUMNS);
+$users_columns_term = [];
+$users_column_name = [];
+foreach ($users_columns as $extra_column) {
+    if (preg_match('/\|/', $extra_column)) {
+        list($field, $term) = preg_split('/\|/', $extra_column);
+        $users_columns_name[] = $field;
+        $users_columns_term[$field] = $term;
+        $extra_column = $field;
+    } else {
+        $users_columns_name[] = $extra_column;
+        $users_columns_term[$extra_column] = '';
+    }
+    $users->values($extra_column);
+}
+
 $users->order_by($order . $order_column);
 ?>
 <div id="basic_search">
@@ -157,19 +179,30 @@ else
             <th nowrap width="4%">&nbsp;</th>
             <th><a <?php echo $name_sort; ?> href="users.php?<?php
                 echo $qstr; ?>&sort=name"><?php echo __('Name'); ?></a></th>
-            <th width="22%"><a  <?php echo $status_sort; ?> href="users.php?<?php
-                echo $qstr; ?>&sort=status"><?php echo __('Status'); ?></a></th>
-            <th width="20%"><a <?php echo $create_sort; ?> href="users.php?<?php
-                echo $qstr; ?>&sort=create"><?php echo __('Created'); ?></a></th>
-            <th width="20%"><a <?php echo $update_sort; ?> href="users.php?<?php
-                echo $qstr; ?>&sort=update"><?php echo __('Updated'); ?></a></th>
+            <!--th width="22%"><a  <?php echo $status_sort; ?> href="users.php?<?php
+                echo $qstr; ?>&sort=status"><?php echo __('Status'); ?></a></th-->
+            <!--th width="20%"><a <?php echo $create_sort; ?> href="users.php?<?php
+                echo $qstr; ?>&sort=create"><?php echo __('Created'); ?></a></th-->
+            <!--th-- width="20%"><a <?php echo $update_sort; ?> href="users.php?<?php
+                echo $qstr; ?>&sort=update"><?php echo __('Updated'); ?></a></th-->
+            <!--th><a <?php echo $update_sort; ?> href="users.php?<?php
+                echo $qstr; ?>&sort=update"><?php echo __('Email'); ?></a></th-->
+            <?php
+            foreach ($users_columns_name as $extra_column) {
+                if (!empty($users_columns_term[$extra_column])) {
+                    echo '            <th>'.__($users_columns_term[$extra_column]).'</th>';
+                } else {
+                    echo '            <th>'.$extra_column.'</th>';
+                }
+            }
+            ?>
         </tr>
     </thead>
     <tbody>
     <?php
         $ids=($errors && is_array($_POST['ids']))?$_POST['ids']:null;
         foreach ($users as $U) {
-                // Default to email address mailbox if no name specified
+                // Defaults to email address mailbox if no name specified
                 if (!$U['name'])
                     list($name) = explode('@', $U['default_email__address']);
                 else
@@ -201,9 +234,15 @@ else
                              <small>(%d)</small>', $U['ticket_count']);
                     ?>
                 </td>
-                <td><?php echo $status; ?></td>
-                <td><?php echo Format::date($U['created']); ?></td>
-                <td><?php echo Format::datetime($U['updated']); ?>&nbsp;</td>
+                <!--td><?php echo $status; ?></td-->
+                <!--td><?php echo Format::date($U['created']); ?></td-->
+                <!--td><?php echo Format::datetime($U['updated']); ?>&nbsp;</td-->
+               <!--td><?php echo $U['default_email__address']; ?></td-->
+               <?php
+               foreach ($users_columns_name as $extra_column) {
+                   echo '<td>'.$U[$extra_column].'</td>';
+               }
+               ?>
                </tr>
 <?php   } //end of foreach. ?>
     </tbody>

@@ -685,6 +685,7 @@ implements TemplateVariable, Searchable {
     }
 
     static function getNameById($id) {
+        /* @var User $user */
         if ($user = static::lookup($id))
             return $user->getName();
     }
