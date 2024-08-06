@@ -370,7 +370,7 @@ if ($_POST)
             <?php
             if($cfg->isCannedResponseEnabled() && ($cannedResponses=Canned::getCannedResponses())) {
                 ?>
-                <div style="margin-top:0.3em;margin-bottom:0.5em">
+                <!--div style="margin-top:0.3em;margin-bottom:0.5em">
                     <?php echo __('Canned Response');?>:&nbsp;
                     <select id="cannedResp" name="cannedResp">
                         <option value="0" selected="selected">&mdash; <?php echo __('Select a canned response');?> &mdash;</option>
@@ -382,13 +382,13 @@ if ($_POST)
                     </select>
                     &nbsp;&nbsp;
                     <label class="checkbox inline"><input type='checkbox' value='1' name="append" id="append" checked="checked"><?php echo __('Append');?></label>
-                </div>
+                </div-->
             <?php
             }
                 $signature = '';
                 if ($thisstaff->getDefaultSignatureType() == 'mine')
                     $signature = $thisstaff->getSignature(); ?>
-                <textarea
+                <!--textarea
                     class="<?php if ($cfg->isRichTextEnabled()) echo 'richtext';
                         ?> draft draft-delete" data-signature="<?php
                         echo Format::viewableImages(Format::htmlchars($signature, true)); ?>"
@@ -398,12 +398,12 @@ if ($_POST)
                     style="width:80%;" <?php
     list($draft, $attrs) = Draft::getDraftAndDataAttrs('ticket.staff.response', false, $info['response']);
     echo $attrs; ?>><?php echo ThreadEntryBody::clean($_POST ? $info['response'] : $draft);
-                ?></textarea>
-                    <div class="attachments">
+                ?></textarea-->
+                    <!--div class="attachments">
 <?php
 print $response_form->getField('attachments')->render();
 ?>
-                    </div>
+                    </div-->
 
                 <table border="0" cellspacing="0" cellpadding="2" width="100%">
             <tr>
@@ -429,7 +429,7 @@ print $response_form->getField('attachments')->render();
                     </select>
                 </td>
             </tr>
-             <tr>
+            <!--tr>
                 <td width="100"><?php echo __('Signature');?>:</td>
                 <td>
                     <?php
@@ -445,7 +445,7 @@ print $response_form->getField('attachments')->render();
                     <label><input type="radio" name="signature" value="dept"
                         <?php echo ($info['signature']=='dept')?'checked="checked"':''; ?>> <?php echo sprintf(__('Department Signature (%s)'), __('if set')); ?></label>
                 </td>
-             </tr>
+             </tr-->
             </table>
             </td>
         </tr>
