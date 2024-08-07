@@ -106,7 +106,7 @@ if($ticket->isOverdue())
             </div>
             <?php
             // Transfer
-            if ($role->hasPerm(Ticket::PERM_TRANSFER)) {?>
+            if (false && $role->hasPerm(Ticket::PERM_TRANSFER)) {?>
             <a class="action-button pull-right ticket-action" id="ticket-transfer" data-placement="bottom" data-toggle="tooltip" title="<?php echo __('Transfer'); ?>"
                 data-redirect="tickets.php"
                 href="#tickets/<?php echo $ticket->getId(); ?>/transfer"><i class="icon-share"></i></a>
@@ -285,7 +285,7 @@ if($ticket->isOverdue())
                     echo sprintf('<span style="font-weight: 700; line-height: 26px;">%s</span>', __('PARENT'));
                 elseif ($ticket->isChild())
                     echo sprintf('<span style="font-weight: 700; line-height: 26px;">%s</span>', __('CHILD'));
-                if ($role->hasPerm(Ticket::PERM_REPLY)) { ?>
+                if (false && $role->hasPerm(Ticket::PERM_REPLY)) { ?>
                 <a href="#post-reply" class="post-response action-button"
                 data-placement="bottom" data-toggle="tooltip"
                 title="<?php echo __('Post Reply'); ?>"><i class="icon-mail-reply"></i></a>
@@ -792,21 +792,21 @@ if ($errors['err'] && isset($_POST['a'])) {
 >
     <ul class="tabs" id="response-tabs">
         <?php
-        if ($role->hasPerm(Ticket::PERM_REPLY) && !($blockReply)) { ?>
-        <li class="active <?php
+        if (false && $role->hasPerm(Ticket::PERM_REPLY) && !($blockReply)) { ?>
+        <li <?php
             echo isset($errors['reply']) ? 'error' : ''; ?>"><a
             href="#reply" id="post-reply-tab"><?php echo __('Post Reply');?></a></li>
         <?php
         }
         if (!($blockReply)) { ?>
-        <li><a href="#note" <?php
+        <li class="active"><a href="#note" <?php
             echo isset($errors['postnote']) ?  'class="error"' : ''; ?>
             id="post-note-tab"><?php echo __('Post Internal Note');?></a></li>
         <?php
         } ?>
     </ul>
     <?php
-    if ($role->hasPerm(Ticket::PERM_REPLY) && !($blockReply)) {
+    if (false && $role->hasPerm(Ticket::PERM_REPLY) && !($blockReply)) {
         $replyTo = $_POST['reply-to'] ?: 'all';
         $emailReply = ($replyTo != 'none');
         ?>
