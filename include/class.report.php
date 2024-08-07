@@ -28,7 +28,8 @@ class OverviewReport {
         '+7 days' => 'One Week',
         '+14 days' => 'Two Weeks',
         '+1 month' => 'One Month',
-        '+3 months' => 'One Quarter'
+        '+3 months' => 'One Quarter',
+        '+12 months' => 'One Year',
     ];
 
     var $format;
@@ -37,7 +38,8 @@ class OverviewReport {
         global $cfg;
 
         $this->start = Format::sanitize($start);
-        $this->end = array_key_exists($end, self::$end_choices) ? $end : 'now';
+        //$this->end = array_key_exists($end, self::$end_choices) ? $end : 'now';
+        $this->end = Format::sanitize($end);
         $this->format = $format ?: $cfg->getDateFormat(true);
     }
 
@@ -56,6 +58,22 @@ class OverviewReport {
         }
 
         return Format::date(Misc::dbtime($this->start), false, $format);
+    }
+
+    function getEndDate($format=null, $translate=true) {
+
+        if (!$this->end)
+            return '';
+
+        $format =  $format ?: $this->format;
+        if ($translate) {
+            $format = str_replace(
+                array('y', 'Y', 'm'),
+                array('y', 'yy', 'mm'),
+                $format);
+        }
+
+        return Format::date(Misc::dbtime($this->end), false, $format);
     }
 
 

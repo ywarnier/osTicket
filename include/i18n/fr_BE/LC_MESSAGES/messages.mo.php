@@ -3301,6 +3301,12 @@ utilisées pour générer des séquences à des fins différentes.',
   'yesterday' => 'hier',
   'you' => 'vous',
   'In person' => 'Présentiel',
+  'Up to today' => 'Jusqu\'aujourd\'hui',
+  'One Week' => 'Une semaine',
+  'Two Weeks' => 'Deux semaines',
+  'One Month' => 'Un mois',
+  'One Quarter' => 'Trois mois',
+  'One Year' => 'Un an',
   0 => 
   array (
     'Revision' => 0,

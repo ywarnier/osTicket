@@ -1,5 +1,5 @@
 <?php
-$report = new OverviewReport($_POST['start'], $_POST['period']);
+$report = new OverviewReport($_POST['start'], $_POST['end']);
 $plots = $report->getPlotData();
 
 ?>
@@ -17,20 +17,28 @@ $plots = $report->getPlotData();
         <!--<p><?php //echo __('Select the starting time and period for the system activity graph');?></p>-->
             <?php echo csrf_token(); ?>
             <label>
-                <?php echo __( 'Report timeframe'); ?>:
+                <?php echo __( 'Start'); ?>:
                 <input type="text" class="dp input-medium search-query"
-                    name="start" placeholder="<?php echo __('Last month');?>"
+                    name="start" placeholder=""
                     value="<?php
                         echo Format::htmlchars($report->getStartDate());
                     ?>" />
             </label>
             <label>
+                <?php echo __( 'End'); ?>:
+                <input type="text" class="dp input-medium search-query"
+                       name="end" placeholder=""
+                       value="<?php
+                       echo Format::htmlchars($report->getEndDate());
+                       ?>" />
+            </label>
+            <!--label>
                 <?php echo __('period');?>:
                 <select name="period">
                     <?php foreach ($report::$end_choices as $val=>$desc)
                             echo "<option value='$val'>" . __($desc) . "</option>"; ?>
                 </select>
-            </label>
+            </label-->
             <button class="green button action-button muted" type="submit">
                 <?php echo __( 'Refresh');?>
             </button>
@@ -159,7 +167,7 @@ foreach ($groups as $g=>$desc) {
     <div style="margin-top: 5px"><button type="submit" class="link button" name="export"
         value="<?php echo Format::htmlchars($g); ?>">
         <i class="icon-download"></i>
-        <?php echo __('Export'); ?></a></div>
+        <?php echo __('Export'); ?></button></div>
     </div>
 <?php
 }
