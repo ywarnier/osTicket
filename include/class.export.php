@@ -177,7 +177,15 @@ class Export {
         return false;
     }
 
-    static function saveUsers($sql, $filename, $how='csv') {
+    /**
+     * Export users in a given format (csv by default)
+     * @param $sql The QuerySet object that already defines the type of object we want to export
+     * @param $filename The name of the file it will generate
+     * @param ?string $how The export format ('csv', 'json')
+     * @param ?array $filter An optional filter like (['created__gte'=>'2024-01-01', 'created_lte'=>'2024-12-31'])
+     * @return false
+     */
+    static function saveUsers($sql, $filename, $how='csv', $filter=[]) {
 
         $exclude = array('name', 'email');
         $form = UserForm::getUserForm();
@@ -187,8 +195,10 @@ class Export {
                 array_values(array_map(
                         function ($f) { return $f->getLocal('label'); }, $fields)));
 
+        /* @var $sql QuerySet */
         $users = $sql->models()
-            ->select_related('org', 'cdata');
+            ->select_related('org', 'cdata')
+            ->filter($filter);
 
         ob_start();
         echo self::dumpQuery($users,
