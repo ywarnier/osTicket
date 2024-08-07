@@ -206,7 +206,8 @@ class Export {
                     'name'  =>          __('Name'),
                     'org' =>   __('Organization'),
                     '::getEmail' =>          __('Email'),
-                    ) + $cdata,
+                    'created' => __('Date Created'),
+                ) + $cdata,
                 $how,
                 array('modify' => function(&$record, $keys, $obj) use ($fields) {
                     foreach ($fields as $k=>$f) {
