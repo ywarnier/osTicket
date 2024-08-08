@@ -196,9 +196,14 @@ class Export {
                         function ($f) { return $f->getLocal('label'); }, $fields)));
 
         /* @var $sql QuerySet */
-        $users = $sql->models()
-            ->select_related('org', 'cdata')
-            ->filter($filter);
+        if (!empty($filter)) {
+            $users = $sql->models()
+                ->select_related('org', 'cdata')
+                ->filter($filter);
+        } else {
+            $users = $sql->models()
+                ->select_related('org', 'cdata');
+        }
 
         ob_start();
         echo self::dumpQuery($users,
