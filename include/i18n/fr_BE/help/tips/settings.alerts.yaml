@@ -24,7 +24,7 @@ ticket_alert:
 message_alert:
   title: Alerte de Nouveau Message
   content: >
-    Alerte envoyée aux Agents lorsqu'un nouveau message de l'utilisateur est ajouté à un ticket existant.
+    Alerte envoyée aux Agents lorsqu'un nouveau message de l'usager est ajouté à un ticket existant.
   links:
     - 
       title: Modèle par défaut de notification de nouveau message

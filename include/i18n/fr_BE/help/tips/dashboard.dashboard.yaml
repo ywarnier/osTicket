@@ -24,7 +24,7 @@ statistics:
 opened:
   title: Ouverts
   content: >
-    Tickets initialement ouverts et associés au service ou à la rubrique d'aide, ou le nombre de tickets qu'un agent a ouvert au nom d'un utilisateur.
+    Tickets initialement ouverts et associés au service ou à la rubrique d'aide, ou le nombre de tickets qu'un agent a ouvert au nom d'un usager.
 assigned:
   title: Assigné
   content: >

@@ -16,7 +16,7 @@ helpdesk_status:
 helpdesk_url:
   title: URL du helpdesk
   content: >
-    Cette URL est la base de votre installation osTicket. Elle est utilisée dans les emails pour diriger les utilisateurs vers votre helpdesk.
+    Cette URL est la base de votre installation osTicket. Elle est utilisée dans les emails pour diriger les usagers vers votre helpdesk.
 helpdesk_name_title:
   title: Nom du support
   content: >
@@ -56,13 +56,13 @@ enable_richtext:
 enable_avatars:
   title: Activer les avatars dans la visualisation des fils
   content: >
-    Activer l'option des <span class="doc-desc-title">avatars</span> sur les entrées de fils. <br><br> La <span class="doc-desc-title">source de l'avatar</span> peut être paramétrée dans les pages des agents et des utilisateurs.
+    Activer l'option des <span class="doc-desc-title">avatars</span> sur les entrées de fils. <br><br> La <span class="doc-desc-title">source de l'avatar</span> peut être paramétrée dans les pages des agents et des usagers.
   links:
     - 
       title: Paramètrages des agents
       href: /scp/settings.php?t=agents
     - 
-      title: Paramétrages des utilisateurs
+      title: Paramétrages des usagers
       href: /scp/settings.php?t=users
 collision_avoidance:
   title: Évitement de collision des agents
@@ -96,15 +96,15 @@ date_time_options:
 languages:
   title: Langues du système
   content: >
-    Choisissez la langue principale du système et les éventuelles langues complémentaires pour vos agents et les utilisateurs finaux.
+    Choisissez la langue principale du système et les éventuelles langues complémentaires pour vos agents et les usagers finaux.
 primary_language:
   title: Langue principale du système
   content: >
-    Cette langue est affichée pour les agents et les utilisateurs finaux si leur préférence linguistique ne sont pas disponibles. Cela inclut le contenu de l'interface, ainsi que le contenu personnalisé, comme les pages de remerciement et les messages courriel. <br/><br/> C'est la langue dans laquelle les versions non traduites de votre contenu doit être écrit.
+    Cette langue est affichée pour les agents et les usagers finaux si leur préférence linguistique ne sont pas disponibles. Cela inclut le contenu de l'interface, ainsi que le contenu personnalisé, comme les pages de remerciement et les messages courriel. <br/><br/> C'est la langue dans laquelle les versions non traduites de votre contenu doit être écrit.
 secondary_language:
   title: Langues secondaires
   content: >
-    Sélectionnez les options de langue pour vos agents et les utilisateurs finaux. L'interface sera disponible dans ces langues et les contenus personnalisé, comme les pages de remerciement ou les titres des rubriques d'aides, seront traduisibles dans ces langues.
+    Sélectionnez les options de langue pour vos agents et les usagers finaux. L'interface sera disponible dans ces langues et les contenus personnalisé, comme les pages de remerciement ou les titres des rubriques d'aides, seront traduisibles dans ces langues.
 #Attachments
 attachments:
   title: Paramètre et stockage des pièces jointes
@@ -125,4 +125,4 @@ max_file_size:
 files_req_auth:
   title: Connexion requise
   content: >
-    Activer cette option pour empêcher l'accès aux pièces jointes par des utilisateurs-trices non authentifiés-es. Ceci est aussi valable pour les agents-es.<br><br>Concernant la sécurité, veuillez noter que les navigateurs des utilisateurs-trices pourraient garder une copie des pièces jointes en cache. Par ailleurs, tous les liens sur des fichiers ont une validité d'environ 24 heures.
+    Activer cette option pour empêcher l'accès aux pièces jointes par des usagers-gères non authentifiés-es. Ceci est aussi valable pour les agents-es.<br><br>Concernant la sécurité, veuillez noter que les navigateurs des usagers-gères pourraient garder une copie des pièces jointes en cache. Par ailleurs, tous les liens sur des fichiers ont une validité d'environ 24 heures.

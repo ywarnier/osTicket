@@ -20,4 +20,4 @@ site_pages:
 type:
   title: Type
   content: >
-    Les pages <span class="doc-desc-opt">hors-ligne</span> sont affichées sur le portail client si votre service d'assistance est désactivée. Les pages de <span class="doc-desc-opt">renvoi</span> sont affichées sur la page d'accueil de votre portail client. Les pages de <span class="doc-desc-opt">remerciement</span> s'affichent après qu'un utilisateur soumet un billet. Les <span class="doc-desc-opt">autres</span> pages peuvent être utilisées comme un système de gestion de contenu (CMS).
+    Les pages <span class="doc-desc-opt">hors-ligne</span> sont affichées sur le portail client si votre service d'assistance est désactivée. Les pages de <span class="doc-desc-opt">renvoi</span> sont affichées sur la page d'accueil de votre portail client. Les pages de <span class="doc-desc-opt">remerciement</span> s'affichent après qu'un usager soumet un billet. Les <span class="doc-desc-opt">autres</span> pages peuvent être utilisées comme un système de gestion de contenu (CMS).

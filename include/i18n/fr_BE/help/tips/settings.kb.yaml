@@ -16,7 +16,7 @@ knowledge_base_settings:
 knowledge_base_status:
   title: Statut de la Base de connaissances
   content: >
-    Activez ce paramètre pour autoriser les utilisateurs d’accéder en libre-service à vos articles de la base de connaissances publiques. Les catégories de la <br><br>base de connaissances et de la FAQ peuvent être faite en interne (visible uniquement par les Agents.)
+    Activez ce paramètre pour autoriser les usagers d’accéder en libre-service à vos articles de la base de connaissances publiques. Les catégories de la <br><br>base de connaissances et de la FAQ peuvent être faite en interne (visible uniquement par les Agents.)
   links:
     - 
       title: Gérer la Base de connaissances
@@ -24,7 +24,7 @@ knowledge_base_status:
 restrict_kb:
   title: Restreindre l'accès à la base de connaissance
   content: >
-    Activer cette option pour empêcher que les utilisateurs non authentifiés puissent accéder aux articles de la base de connaissance depuis l'interface client.
+    Activer cette option pour empêcher que les usagers non authentifiés puissent accéder aux articles de la base de connaissance depuis l'interface client.
   links:
     - 
       title: Paramètres de contrôle d'accès

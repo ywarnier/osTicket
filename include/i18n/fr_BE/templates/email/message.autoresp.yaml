@@ -4,7 +4,7 @@
 #customer web portal and posts a new message there.
 ---
 notes: |
-  Envoyé à un utilisateur lorsque l'utilisateur poste un nouveau message sur un ticket. Cela peut se produire si l'utilisateur répond à un courrier électronique du système ou visite le portail client et y poste un nouveau message.
+  Envoyé à un usager lorsque l'usager poste un nouveau message sur un ticket. Cela peut se produire si l'usager répond à un courrier électronique du système ou visite le portail client et y poste un nouveau message.
 subject: |
   Confirmation de Message
 body: |

@@ -20,7 +20,7 @@ type:
 email:
   title: Email
   content: >
-    Adresse e-mail utilisée pour envoyer aux utilisateurs les réponses postées par des Agents.
+    Adresse e-mail utilisée pour envoyer aux usagers les réponses postées par des Agents.
 template:
   title: Ensemble de modèles
   content: >
@@ -80,11 +80,11 @@ auto_response_settings:
 new_ticket:
   title: Réponse automatique à la création d'un billet
   content: >
-    Vous pouvez désactiver la réponse automatique envoyée à l'utilisateur lorsqu'un nouveau ticket est créé et acheminé à ce service.
+    Vous pouvez désactiver la réponse automatique envoyée à l'usager lorsqu'un nouveau ticket est créé et acheminé à ce service.
 new_message:
   title: Réponse automatique à un nouveau message
   content: >
-    Vous pouvez désactiver la réponse automatique envoyée à l'utilisateur pour confirmer un message récemment affiché pour les tickets dans ce département.
+    Vous pouvez désactiver la réponse automatique envoyée à l'usager pour confirmer un message récemment affiché pour les tickets dans ce département.
 auto_response_email:
   title: E-mail de réponse automatique
   content: >

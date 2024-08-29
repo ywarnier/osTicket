@@ -149,7 +149,7 @@
 - 
   type: O #notrans
   title: Information sur l'entreprise
-  instructions: Détails sur la société à laquelle appartient l'utilisateur
+  instructions: Détails sur la société à laquelle appartient l'usager
   flags: 0
   fields:
     - 

@@ -21,7 +21,7 @@ staff_identity_masking:
 disable_agent_collabs:
   title: Désactiver les collaborateurs de l'agent
   content: >
-    Si activé, les agents ajoutés comme collaborateurs par les utilisateurs seront désactivés. C'est utile quand les utilisateurs ajoutent aveuglément des agents dans le champs CC entrainant la réception par les agents de toutes les notifications de participation. <br><br> <strong>Note:</strong> <br> Ce paramètre est global pour tous les tickets utilisateurs créés par API, Piping et Fetching.
+    Si activé, les agents ajoutés comme collaborateurs par les usagers seront désactivés. C'est utile quand les usagers ajoutent aveuglément des agents dans le champs CC entrainant la réception par les agents de toutes les notifications de participation. <br><br> <strong>Note:</strong> <br> Ce paramètre est global pour tous les tickets usagers créés par API, Piping et Fetching.
 #Authentication settings
 agent_password_policy:
   title: Politique de gestion des mots de passe
@@ -42,7 +42,7 @@ staff_session_timeout:
 bind_staff_session_to_ip:
   title: Lier la session de l'Agent à IP
   content: >
-    Activez cette option si vous voulez que vos agents soient mémorisés par leurs adresses IP lors de leurs connexions. <br><br> Cette option n'est pas recommandée pour les utilisateurs qui obtiennent leur adresse IP dynamiquement.
+    Activez cette option si vous voulez que vos agents soient mémorisés par leurs adresses IP lors de leurs connexions. <br><br> Cette option n'est pas recommandée pour les usagers qui obtiennent leur adresse IP dynamiquement.
 require_agent_2fa:
   title: Nécessite l'Authentification à Deux Facteurs
   content: >

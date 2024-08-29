@@ -17,7 +17,7 @@
   flags: 1
   name: Dresseurs de Lion
   notes: |
-    Admin du système. Ces utilisateurs (au départ) ont un contrôle total de tous les départements auxquels ils ont accès.
+    Admin du système. Ces usagers (au départ) ont un contrôle total de tous les départements auxquels ils ont accès.
   depts:
     - 1
     - 2
@@ -28,7 +28,7 @@
   flags: 1
   name: Conducteurs d'éléphant
   notes: |
-    Super utilisateurs (root)
+    Super usagers (root)
   depts:
     - 1
     - 2

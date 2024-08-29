@@ -2,7 +2,7 @@
 #Sent to a user when a new ticket is created
 ---
 notes: |
-  Envoyé a l'utilisateur lorsqu'un nouveau ticket vient d'être créé
+  Envoyé a l'usager lorsqu'un nouveau ticket vient d'être créé
 subject: |
   Ticket ouvert [#%{ticket.number}]
 body: |

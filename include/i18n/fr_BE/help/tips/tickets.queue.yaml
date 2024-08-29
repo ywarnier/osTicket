@@ -56,7 +56,7 @@ advanced_search_dialog:
 adv_keyword:
   title: Recherche par mots-clés
   content: >
-    Trouver des éléments basés sur les objets et les messages ainsi que sur tout le contenu textuel associé aux champs personnalisés des utilisateurs et des tickets.
+    Trouver des éléments basés sur les objets et les messages ainsi que sur tout le contenu textuel associé aux champs personnalisés des usagers et des tickets.
 adv_date_range:
   title: Recherche par plage de dates
   content: >
@@ -76,4 +76,4 @@ parent_status:
 reply_types:
   title: Types de réponse
   content: >
-    <b>Répondre à tous : </b> La réponse est envoyée à l'utilisateur-rice et aux collaborateurs-rices que vous avez choisi d'associer au ticket.<br/><b> Réponse à l'utilisateur-rice : </b> La réponse est envoyée uniquement à l'utilisateur-trice (pas aux collaborateurs-trices).<br/><b>Ne pas répondre : </b> Aucune réponse n'est envoyée. Néanmoins, la réponse de l'agent-e est visible par <b>TOUS-TES</b> les utilisateurs-trices à la lecture du ticket.
+    <b>Répondre à tous : </b> La réponse est envoyée à l'usager-rice et aux collaborateurs-rices que vous avez choisi d'associer au ticket.<br/><b> Réponse à l'usager-gère : </b> La réponse est envoyée uniquement à l'usager-gère (pas aux collaborateurs-trices).<br/><b>Ne pas répondre : </b> Aucune réponse n'est envoyée. Néanmoins, la réponse de l'agent-e est visible par <b>TOUS-TES</b> les usagers-gères à la lecture du ticket.

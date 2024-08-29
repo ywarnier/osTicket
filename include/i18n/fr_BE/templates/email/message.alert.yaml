@@ -4,7 +4,7 @@
 #the customer web portal and posts a new message there.
 ---
 notes: |
-  Envoyé aux membres de l'équipe lorsqu'un nouveau message est posté sur un ticket par un utilisateur. Cela peut se produire si les utilisateurs répondent à un courrier électronique du système ou visitent le portail client et y postent un nouveau message.
+  Envoyé aux membres de l'équipe lorsqu'un nouveau message est posté sur un ticket par un usager. Cela peut se produire si les usagers répondent à un courrier électronique du système ou visitent le portail client et y postent un nouveau message.
 subject: |
   Alerte de Nouveau Message
 body: |

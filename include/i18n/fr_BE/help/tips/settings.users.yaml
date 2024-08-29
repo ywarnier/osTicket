@@ -11,14 +11,14 @@
 #General Settings
 ---
 client_name_format:
-  title: Format pour le nom des utilisateurs
+  title: Format pour le nom des usagers
   content: >
-    Choisissez un format pour le nom des utilisateurs sur l'ensemble du système. Les modèles des messages de courriel l'utiliseront si un autre format n'est pas spécifié.
+    Choisissez un format pour le nom des usagers sur l'ensemble du système. Les modèles des messages de courriel l'utiliseront si un autre format n'est pas spécifié.
 #Authentication settings
 client_password_policy:
   title: Politique de gestion des mots de passe
   content: >
-    Choisissez une <span class="doc-desc-title">politique de mots de passe</span> pour les <span class="doc-desc-title">Utilisateurs</span>. <br><br> D'autres politiques peuvent être ajoutées en installant des extensions de <span class="doc-desc-title">politique de mots de passe</span>.
+    Choisissez une <span class="doc-desc-title">politique de mots de passe</span> pour les <span class="doc-desc-title">usagers</span>. <br><br> D'autres politiques peuvent être ajoutées en installant des extensions de <span class="doc-desc-title">politique de mots de passe</span>.
 client_session_timeout:
   title: Durée de la session
   content: >
@@ -26,11 +26,11 @@ client_session_timeout:
 registration_method:
   title: Options d'enregistrement
   content: >
-    <span class="doc-desc-title">Méthode d'enregistrement</span> et <span class="doc-desc-title">inscription requise</span> sont utilisés ensemble pour configurer la manière dont les utilisateurs s'inscrivent et accèdent au portail de gestion des billets. Le tableau ci-dessous résume comment les deux paramètres sont interprétés par le système.. <table border="1" cellpadding="2px" cellspacing="0" style="margin-top:7px" ><tbody style="vertical-align:top;"> <tr><th>inscription requise</th> <th>Méthode d'enregistrement</th> <th>Résultat</th></tr> <tr><td>Non</td><td>Publique</td> <td>Enregistrement recommandé mais pas obligatoire pour créer un nouveau billet.</td></tr> <tr><td>Oui</td><td>Publique</td> <td>Enregistrement et connexion requise pour créer un nouveau billet</td></tr> <tr><td>Non</td><td>Privée</td> <td>N'importe qui peut créer un billet, mais seulement les développeurs peuvent enregistrer un compte </td></tr> <tr><td>Oui</td><td>Privée</td> <td>Les accès utilisateur sont uniquement sur invitation</td></tr> <tr><td>Non</td><td>Désactivée</td> <td>Personne ne peut enregistrer un compte, mais n'importe qui peut créer un billet. <em>Osticket fonctionnait comme ça avant la version 1.9</em></td></tr> <tr><td>Oui</td><td>Désactivée</td> <td>Désactive la création de nouveau billet via le portail de gestion</td></tr> </tbody></table>
+    <span class="doc-desc-title">Méthode d'enregistrement</span> et <span class="doc-desc-title">inscription requise</span> sont utilisés ensemble pour configurer la manière dont les usagers s'inscrivent et accèdent au portail de gestion des billets. Le tableau ci-dessous résume comment les deux paramètres sont interprétés par le système.. <table border="1" cellpadding="2px" cellspacing="0" style="margin-top:7px" ><tbody style="vertical-align:top;"> <tr><th>inscription requise</th> <th>Méthode d'enregistrement</th> <th>Résultat</th></tr> <tr><td>Non</td><td>Publique</td> <td>Enregistrement recommandé mais pas obligatoire pour créer un nouveau billet.</td></tr> <tr><td>Oui</td><td>Publique</td> <td>Enregistrement et connexion requise pour créer un nouveau billet</td></tr> <tr><td>Non</td><td>Privée</td> <td>N'importe qui peut créer un billet, mais seulement les développeurs peuvent enregistrer un compte </td></tr> <tr><td>Oui</td><td>Privée</td> <td>Les accès usager sont uniquement sur invitation</td></tr> <tr><td>Non</td><td>Désactivée</td> <td>Personne ne peut enregistrer un compte, mais n'importe qui peut créer un billet. <em>Osticket fonctionnait comme ça avant la version 1.9</em></td></tr> <tr><td>Oui</td><td>Désactivée</td> <td>Désactive la création de nouveau billet via le portail de gestion</td></tr> </tbody></table>
 client_verify_email:
   title: Exiger un courrier de vérification
   content: >
-    Désactivez cette option pour donner à vos utilisateurs un accès immédiat à vos billets via le "Vérification du statut du billet" sur la page d'accueil du portail de gestion. Si cette option est activée, (qui est la valeur par défaut), les utilisateurs recevront un courriel avec un lien vers le billet. <br><br> La désactivation de vérification de courriel pourrait permettre à des tierces parties (p. ex. billets d'autres collaborateurs) de visualiser les billets.
+    Désactivez cette option pour donner à vos usagers un accès immédiat à vos billets via le "Vérification du statut du billet" sur la page d'accueil du portail de gestion. Si cette option est activée, (qui est la valeur par défaut), les usagers recevront un courriel avec un lien vers le billet. <br><br> La désactivation de vérification de courriel pourrait permettre à des tierces parties (p. ex. billets d'autres collaborateurs) de visualiser les billets.
 allow_auth_tokens:
   title: Activer l'authentification par jetons
   content: >

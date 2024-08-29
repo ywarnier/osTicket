@@ -17,5 +17,5 @@ org_sharing:
 email_domain:
   title: Domaine de messagerie
   content: >
-    Les utilisateurs peuvent être automatiquement ajoutés à cette organisation en fonction du nom de domaine de leur adresse de courriel. Utilisez la boîte ci-dessous pour entrer un ou plusieurs domaines séparés par des virgules . Par exemple, entrez <code>example.com</code> pour les utilisateurs avec des adresses e-mail se terminant par @example.com
+    Les usagers peuvent être automatiquement ajoutés à cette organisation en fonction du nom de domaine de leur adresse de courriel. Utilisez la boîte ci-dessous pour entrer un ou plusieurs domaines séparés par des virgules . Par exemple, entrez <code>example.com</code> pour les usagers avec des adresses e-mail se terminant par @example.com
 

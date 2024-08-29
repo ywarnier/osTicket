@@ -32,17 +32,17 @@ new_ticket_department:
 auto_response:
   title: Réponse automatique à la création d'un billet
   content: >
-    Vous pouvez désactiver la réponse automatique envoyée à l'utilisateur lorsqu'un nouveau billet est créé via cette adresse.
+    Vous pouvez désactiver la réponse automatique envoyée à l'usager lorsqu'un nouveau billet est créé via cette adresse.
 userid:
-  title: Nom d'utilisateur
+  title: Nom d'usager
   content: >
-    Le nom d'utilisateur est utilisé dans le processus d'authentification par email. Nous acceptons les chaînes de caractères avec une seule adresse, boîtes mails partagées, nom du serveur + nom d'utilisateur, et une combinaisons de tous.
+    Le nom d'usager est utilisé dans le processus d'authentification par email. Nous acceptons les chaînes de caractères avec une seule adresse, boîtes mails partagées, nom du serveur + nom d'usager, et une combinaisons de tous.
   links:
     - 
       title: Plus d'informations
       href: https://docs.osticket.com/en/latest/Admin/Emails/Emails.html
 username:
-  title: Nom d'utilisateur
+  title: Nom d'usager
   content: >
 
 password:
@@ -52,7 +52,7 @@ password:
 login_information:
   title: Informations de connexion par courriel
   content: >
-    Le <span class="doc-desc-title">nom d'utilisateur</span> et le <span class="doc-desc-title">mot de passe</span> sont nécessaires pour extraire des courriels via IMAP / POP aussi pour envoyer des courriels via SMTP.
+    Le <span class="doc-desc-title">nom d'usager</span> et le <span class="doc-desc-title">mot de passe</span> sont nécessaires pour extraire des courriels via IMAP / POP aussi pour envoyer des courriels via SMTP.
 mail_account:
   title: Récupération de courriel
   content: >
@@ -84,7 +84,7 @@ authentication:
 fetch_frequency:
   title: Fréquence de requête
   content: >
-    Entrez la fréquence, en minutes, le système interroge la boîte aux lettres. <br/> <br/> Cela définira le retard moyen en recevant une réponse automatique après qu'un utilisateur envoie un courriel à cette boîte aux lettres.
+    Entrez la fréquence, en minutes, le système interroge la boîte aux lettres. <br/> <br/> Cela définira le retard moyen en recevant une réponse automatique après qu'un usager envoie un courriel à cette boîte aux lettres.
 emails_per_fetch:
   title: Courriels par requête
   content: >

@@ -14,12 +14,12 @@ contact_information:
   content: >
 
 username:
-  title: Nom d'utilisateur
+  title: Nom d'usager
   content: >
-    Seuls les Agents ayant le statut administrateur peuvent changer un nom d'utilisateur. Si vous êtes un Agent disposant de privilèges d'administrateur, vous pouvez le faire en sélectionnant un Agent à modifier dans la table de <span class="doc-desc-title"> Membres du personnel</span>.
+    Seuls les Agents ayant le statut administrateur peuvent changer un nom d'usager. Si vous êtes un Agent disposant de privilèges d'administrateur, vous pouvez le faire en sélectionnant un Agent à modifier dans la table de <span class="doc-desc-title"> Membres du personnel</span>.
   links:
     - 
-      title: Modifier un nom d'utilisateur en tant qu'administrateur
+      title: Modifier un nom d'usager en tant qu'administrateur
       href: /scp/staff.php
 config2fa:
   title: Authentification à Deux Facteurs

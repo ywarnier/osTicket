@@ -12,7 +12,7 @@
 new_ticket:
   title: Nouveau ticket
   content: >
-    Activer cette option si vous voulez envoyer une réponse automatique à l'utilisateur lors de la création d'un nouveau billet.
+    Activer cette option si vous voulez envoyer une réponse automatique à l'usager lors de la création d'un nouveau billet.
   links:
     - 
       title: Modèle de réponse automatique lors de la création d'un nouveau ticket
@@ -20,7 +20,7 @@ new_ticket:
 new_ticket_by_staff:
   title: Nouveau ticket par l'équipe
   content: >
-    Notification envoyé lorsqu'un Agent crée un billet au nom de l'utilisateur. <em>Agent peut substituer cela lors de la création de nouveaux billets.</em>
+    Notification envoyé lorsqu'un Agent crée un billet au nom de l'usager. <em>Agent peut substituer cela lors de la création de nouveaux billets.</em>
   links:
     - 
       title: Modèle d'avis de nouveau ticket
@@ -44,7 +44,7 @@ new_message_for_participants:
 overlimit_notice:
   title: Avis de dépassement
   content: >
-    Ticket refusé. Un avis a été envoyé à l'utilisateur concernant le dépassement du nombre <span class="doc-desc-title">Maximum de Billets Ouverts</span>.
+    Ticket refusé. Un avis a été envoyé à l'usager concernant le dépassement du nombre <span class="doc-desc-title">Maximum de Billets Ouverts</span>.
   links:
     - 
       title: Modèle d'avis de dépassement

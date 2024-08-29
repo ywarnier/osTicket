@@ -16,7 +16,7 @@ form_title:
 form_instructions:
   title: Formulaire d'Instructions
   content: >
-    Vous pouvez ajouter des instructions supplémentaires qui aideront à guider l'utilisateur dans les champs de formulaire et éventuellement mettre en évidence des données requises.
+    Vous pouvez ajouter des instructions supplémentaires qui aideront à guider l'usager dans les champs de formulaire et éventuellement mettre en évidence des données requises.
 field_sort:
   title: Position d'affichage de champ
   content: >
@@ -28,7 +28,7 @@ field_label:
 field_type:
   title: Type de contenu de champ
   content: >
-    Ceci est utilisé pour définir le type d'entrée attendu de l'utilisateur. Vous pouvez sélectionner des réponses courtes et longues, numéro de téléphone, date et temps, case à cocher, liste déroulante ou une sélection de liste personnalisée.
+    Ceci est utilisé pour définir le type d'entrée attendu de l'usager. Vous pouvez sélectionner des réponses courtes et longues, numéro de téléphone, date et temps, case à cocher, liste déroulante ou une sélection de liste personnalisée.
   links:
     - 
       title: Listes personnalisées
@@ -40,7 +40,7 @@ field_visibility:
 field_variable:
   title: Champ automatique
   content: >
-    Les données du champ seront disponibles pour les modèles de courriel et de pages via le nom utilisé dans cette colonne. Par exemple, les champs du formulaire commun de tickets sont disponibles via <code>%{ticket.variable}</code>, où la <strong>variable</strong> est le nom utilisé dans cette colonne.<br><br><em>Les informations sur la société sont diffusées par <code>%{</code> <code>company.variable}</code>et les informations de l'utilisateur sont disponibles via <code>%{ticket.user.variable}</code></em>
+    Les données du champ seront disponibles pour les modèles de courriel et de pages via le nom utilisé dans cette colonne. Par exemple, les champs du formulaire commun de tickets sont disponibles via <code>%{ticket.variable}</code>, où la <strong>variable</strong> est le nom utilisé dans cette colonne.<br><br><em>Les informations sur la société sont diffusées par <code>%{</code> <code>company.variable}</code>et les informations de l'usager sont disponibles via <code>%{ticket.user.variable}</code></em>
 field_delete:
   title: Supprimer ce champ
   content: >

@@ -3,7 +3,7 @@
 #when it is created
 ---
 notes: |
-  Envoyé à un utilisateur lorsqu'une réponse automatique en conserve est affichée sur un ticket .
+  Envoyé à un usager lorsqu'une réponse automatique en conserve est affichée sur un ticket .
 
   D'autres choix disponibles pour le remplacement:%{ticket.*}, %{response}
 subject: |

@@ -12,7 +12,7 @@
 help_topic_information:
   title: Informations de la rubrique d'aide
   content: >
-    Les <span class="doc-desc-title">rubriques d'aide</span> vous guide sur les informations collectées auprès des utilisateurs et comment les billets sont acheminés ou assignés.
+    Les <span class="doc-desc-title">rubriques d'aide</span> vous guide sur les informations collectées auprès des usagers et comment les billets sont acheminés ou assignés.
 topic:
   title: Nom de la rubrique
   content: >
@@ -64,7 +64,7 @@ sla_plan:
 thank_you_page:
   title: Page de remerciement
   content: >
-    Choisissez la Page de remerciement vers laquelle un utilisateur est redirigé après l'ouverture d'un billet sous cette <span class="doc-desc-title">rubrique</span>.
+    Choisissez la Page de remerciement vers laquelle un usager est redirigé après l'ouverture d'un billet sous cette <span class="doc-desc-title">rubrique</span>.
   links:
     - 
       title: Configurer les pages de remerciements

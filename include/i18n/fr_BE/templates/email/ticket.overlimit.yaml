@@ -4,7 +4,7 @@
 #tickets open by a particular email address.
 ---
 notes: |
-  Envoyées aux utilisateurs lorsqu'ils ont dépassé la limite maximale de tickets ouverts. La limite peut être configurée dans le panneau d'administration osTicket et est définie par le nombre de tickets ouverts par une adresse e-mail.
+  Envoyées aux usagers lorsqu'ils ont dépassé la limite maximale de tickets ouverts. La limite peut être configurée dans le panneau d'administration osTicket et est définie par le nombre de tickets ouverts par une adresse e-mail.
 subject: |
   Limite du nombre de Tickets ouverts atteinte
 body: |

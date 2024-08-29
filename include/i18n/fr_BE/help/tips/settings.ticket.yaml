@@ -48,7 +48,7 @@ default_priority:
 maximum_open_tickets:
   title: Tickets ouverts maximum
   content: >
-    Entrez le <em>nombre</em> maximum de tickets qu'un utilisateur est autorisé à avoir <strong>ouvert</strong> dans votre service d'assistance. <br><br>Entrez <span class="doc-desc-opt"> 0</span> si vous préférez désactiver cette limitation.
+    Entrez le <em>nombre</em> maximum de tickets qu'un usager est autorisé à avoir <strong>ouvert</strong> dans votre service d'assistance. <br><br>Entrez <span class="doc-desc-opt"> 0</span> si vous préférez désactiver cette limitation.
 email_ticket_priority:
   title: Ticket e-mail priorité
   content: >
@@ -56,7 +56,7 @@ email_ticket_priority:
 show_related_tickets:
   title: Afficher les tickets liés
   content: >
-    Afficher tous les tickets relatifs à l'identifiant de l'utilisateur - Autrement l'accès est restreint à une seule vue de ticket par identifiant
+    Afficher tous les tickets relatifs à l'identifiant de l'usager - Autrement l'accès est restreint à une seule vue de ticket par identifiant
 human_verification:
   title: Vérification humaine
   content: >

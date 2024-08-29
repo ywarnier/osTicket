@@ -64,11 +64,11 @@ strip_quoted_reply:
 reply_separator_tag:
   title: Séparateur de réponse
   content: >
-    C'est un jeton indiquant à l'utilisateur de répondre au-dessus de la ligne. <br><br><strong>Remarque :</strong> Ceci est pertinent uniquement si l'option <span class="doc-desc-title"> Retirer les citations</span> est permise ci-dessus.
+    C'est un jeton indiquant à l'usager de répondre au-dessus de la ligne. <br><br><strong>Remarque :</strong> Ceci est pertinent uniquement si l'option <span class="doc-desc-title"> Retirer les citations</span> est permise ci-dessus.
 emailed_tickets_priority:
   title: Priorité des tickets e-mail
   content: >
-    Choisissez si vous souhaitez que l'option priorité/importance du courriel de l'utilisateur (par exemple OutLook) permette de dicter la priorité du nouveau ticket. <br><br>Ce paramètre peut être remplacé par un <span class="doc-desc-title"> Filtre de ticket</span>.
+    Choisissez si vous souhaitez que l'option priorité/importance du courriel de l'usager (par exemple OutLook) permette de dicter la priorité du nouveau ticket. <br><br>Ce paramètre peut être remplacé par un <span class="doc-desc-title"> Filtre de ticket</span>.
   links:
     - 
       title: Créer et gérer les filtres de ticket
@@ -76,7 +76,7 @@ emailed_tickets_priority:
 accept_all_emails:
   title: Accepter tous les courriels
   content: >
-    Accepter les e-mails d'utilisateurs inconnus. <br><br>En décochant ce paramètre les tickets d'utilisateurs inconnus seront rejetés.
+    Accepter les e-mails d'usagers inconnus. <br><br>En décochant ce paramètre les tickets d'usagers inconnus seront rejetés.
 accept_email_collaborators:
   title: Accepter les e-mails des collaborateurs
   content: >
@@ -88,7 +88,7 @@ default_mta:
 ticket_response_files:
   title: Fichiers joints à la réponse du ticket
   content: >
-    Si activé, les pièces jointes attachés par les agents lors d'une réponse à un ticket seront incluses dans le courriel à destination de l'utilisateur.
+    Si activé, les pièces jointes attachés par les agents lors d'une réponse à un ticket seront incluses dans le courriel à destination de l'usager.
 verify_email_addrs:
   title: Vérifier les adresses courriel
   content: >

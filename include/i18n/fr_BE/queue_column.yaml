@@ -55,7 +55,7 @@
   conditions: '[{"crit":["isanswered","nset",null],"prop":{"font-weight":"bold"}}]'
 - 
   id: 4
-  name: "Nom d'utilisateur"
+  name: "Nom d'usager"
   primary: "user__name"
   truncate: "wrap"
   annotations: '[{"c":"ThreadCollaboratorCount","p":">"}]'

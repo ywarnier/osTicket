@@ -3,7 +3,7 @@
 #This is most commonly performed when user's call in on the phone.
 ---
 notes: |
-  Envoyé à un utilisateur lorsqu'un membre du personnel crée un ticket à son nom. C'est le plus fréquemment utilisé lorsque l'utilisateur appel au téléphone.
+  Envoyé à un usager lorsqu'un membre du personnel crée un ticket à son nom. C'est le plus fréquemment utilisé lorsque l'usager appel au téléphone.
 subject: |
   %{ticket.subject} [#%{ticket.number}]
 body: |

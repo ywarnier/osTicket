@@ -12,7 +12,7 @@
 username:
   title: Nom d'utilisateur
   content: >
-    Veuillez choisir <span class="doc-desc-title">nom d'utilisateur</span> unique à votre <span class="doc-desc-title"> Help Desk</span> pour votre Agent.
+    Veuillez choisir un <span class="doc-desc-title">nom d'usager</span> unique à votre <span class="doc-desc-title"> Help Desk</span> pour votre Agent.
 reset2fa:
   title: Réinitialiser l'Authentification à Deux Facteurs
   content: >
@@ -22,7 +22,7 @@ email_address:
   content: >
     Entrez l'adresse de courriel de l'agent qui va recevoir <span class="doc-desc-title">les alertes &amp; avis</span> du <span class="doc-desc-title">système de support</span>.
   0: <br><br>
-  1: Le personnel peut se connecter dans le panneau de contrôle personnel avec son nom d'utilisateur ou son adresse e-mail.
+  1: Le personnel peut se connecter dans le panneau de contrôle personnel avec son nom d'usager ou son adresse e-mail.
 welcome_email:
   title: Courriel de bienvenue
   content: >

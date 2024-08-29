@@ -35,7 +35,7 @@ email:
   content: |
     <p>Adresse personnelle de l'Admin. Doit être différente de l'email par défaut du système.</p>
 username:
-  title: Nom d'utilisateur
+  title: Nom d'usager
   content: |
     <p>Nom de connexion de l'Admin. Doit comporter au moins trois (3) caractères.</p>
 password:

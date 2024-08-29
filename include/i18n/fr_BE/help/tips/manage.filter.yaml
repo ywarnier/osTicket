@@ -36,7 +36,7 @@ ticket_auto_response:
 canned_response:
   title: Réponse préprogrammée
   content: >
-    Choisir une <span class="doc-desc-title">Réponse pré-établie</span>, que vous souhaitez envoyer par courriel à l'utilisateur pour une correspondance sur <span class="doc-desc-title">un filtre de billet</span>.  Le modèle de <span class="doc-desc-title">Réponse automatique de nouveau billet</span> utilisé dépend de quel <span class="doc-desc-title">groupe de modèles</span> est attribué comme valeur par défaut, ou au <span class="doc-desc-title"> Département</span> d'un billet correspondant.
+    Choisir une <span class="doc-desc-title">Réponse pré-établie</span>, que vous souhaitez envoyer par courriel à l'usager pour une correspondance sur <span class="doc-desc-title">un filtre de billet</span>.  Le modèle de <span class="doc-desc-title">Réponse automatique de nouveau billet</span> utilisé dépend de quel <span class="doc-desc-title">groupe de modèles</span> est attribué comme valeur par défaut, ou au <span class="doc-desc-title"> Département</span> d'un billet correspondant.
   links:
     - 
       title: Gérer les réponses standardisées
