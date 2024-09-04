@@ -723,6 +723,30 @@ implements TemplateVariable, Searchable {
 
         return $this->_queue;
     }
+
+    /**
+     * Custom function to pre-fill the latest *new* client num
+     * @return string
+     */
+    function getNewClientNum(): string
+    {
+        $newClientNum = '00000000';
+        $sql = "SELECT clientnum FROM ".USER_CDATA_TABLE." WHERE clientnum IS NOT NULL AND clientnum != '' ORDER BY clientnum DESC LIMIT 1;";
+        // Execute the query
+        $res = db_query($sql, true);
+        // Fetch and return the maximum value found
+        if ($row = db_fetch_row($res)) {
+            error_log('Found max '.$row[0]);
+            $latest = (int) trim($row[0]) + 1;
+            $newClientNum = str_pad((string) $latest, 8, '0', STR_PAD_LEFT);
+        } else {
+            error_log('No row matched query '.$sql);
+        }
+
+        // Return 0 if no value is found
+        return $newClientNum;
+    }
+
 }
 
 class EmailAddress

@@ -96,7 +96,13 @@ if (isset($options['entry']) && $options['mode'] == 'edit') { ?>
     /></i><?php
                 }
                 if ($field->get('hint') && !$field->isBlockLevel()) { ?>
-                    <br /><em style="color:gray;display:inline-block"><?php
+                    <br /><em style="color:gray;display:inline-block"
+                    <?php
+                        if (in_array($field->getLocal('name'), ['clientnum','email'])) {
+                            echo 'data-copy-to-input="true" ';
+                        }
+                    ?>
+                    ><?php
                         echo Format::viewableImages($field->getLocal('hint')); ?></em>
                 <?php
                 }

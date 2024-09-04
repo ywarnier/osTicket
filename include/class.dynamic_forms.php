@@ -1395,6 +1395,18 @@ class DynamicFormEntry extends VerySimpleModel {
         if ($data)
             $inst->setSource($data);
         foreach ($inst->getDynamicFields() as $field) {
+            switch ($field->ht['name']) {
+                case 'clientnum':
+                    $user = new User();
+                    $field->ht['hint'] = $user->getNewClientNum();
+                    break;
+                case 'email':
+                    $user = new User();
+                    $field->ht['hint'] = $user->getNewClientNum().'@example.com';
+                    break;
+                default:
+                    break;
+            }
             if (!($impl = $field->getImpl($field)))
                 continue;
             if (!$impl->hasData() || !$impl->isStorable())

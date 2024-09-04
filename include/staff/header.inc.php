@@ -59,6 +59,44 @@ if (osTicket::is_ie())
         echo "\n\t".implode("\n\t", $headers)."\n";
     }
     ?>
+    <script>
+      // Code to hack into the user creation form (and possibly others in the future) to pre-load the value of a field
+      // with the contents of the "hint" attribute to this field.
+      // This only exists because OSTicket makes it very impractical to simply load a default value into a field.
+      document.addEventListener("DOMContentLoaded", function() {
+        function copyEmToInput() {
+          // Select only <em> elements with the data-copy-to-input attribute inside the popup
+          var emElements = document.querySelectorAll('#popup em[data-copy-to-input="true"]');
+
+          emElements.forEach(function(em) {
+            // Navigate previous siblings to find the corresponding <input>
+            var previousSibling = em.previousElementSibling;
+            while (previousSibling && previousSibling.tagName !== 'INPUT') {
+              previousSibling = previousSibling.previousElementSibling;
+            }
+
+            // If an <input> was found, copy the content of <em> to it and remove the <em>
+            if (previousSibling && previousSibling.tagName === 'INPUT') {
+              previousSibling.value = em.textContent;
+              em.remove();
+            }
+          });
+        }
+
+        // Observer to detect changes in the popup content
+        const observer = new MutationObserver(mutations => {
+          for (let mutation of mutations) {
+            if (mutation.type === 'childList' || mutation.type === 'subtree') {
+              copyEmToInput(); // Run the function when new nodes are added
+            }
+          }
+        });
+
+        // Define what to observe (childList changes) and start observing the popup element
+        const popup = document.getElementById('popup');
+        observer.observe(popup, { childList: true, subtree: true });
+      });
+    </script>
 </head>
 <body>
 <div id="container">
