@@ -736,11 +736,8 @@ implements TemplateVariable, Searchable {
         $res = db_query($sql, true);
         // Fetch and return the maximum value found
         if ($row = db_fetch_row($res)) {
-            error_log('Found max '.$row[0]);
             $latest = (int) trim($row[0]) + 1;
             $newClientNum = str_pad((string) $latest, 8, '0', STR_PAD_LEFT);
-        } else {
-            error_log('No row matched query '.$sql);
         }
 
         // Return 0 if no value is found
