@@ -1,4 +1,5 @@
 <?php
+/** @var User $user */
 if(!defined('OSTSCPINC') || !$thisstaff || !is_object($user)) die('Invalid path');
 
 $account = $user->getAccount();
@@ -126,9 +127,9 @@ if ($thisstaff->hasPerm(User::PERM_EDIT)) { ?>
         <td width="50%" style="vertical-align:top">
             <table border="0" cellspacing="" cellpadding="4" width="100%">
                 <tr>
-                    <th width="150"><?php echo __('Status'); ?>:</th>
+                    <th width="150"><?php echo __('First Name'); ?>:</th>
                     <td> <span id="user-<?php echo $user->getId();
-                    ?>-status"><?php echo $user->getAccountStatus(); ?></span></td>
+                    ?>-status"><?php echo $user->getExtraData()['firstname']; ?></span></td>
                 </tr>
                 <tr>
                     <th><?php echo __('Created'); ?>:</th>

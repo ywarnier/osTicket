@@ -744,6 +744,18 @@ implements TemplateVariable, Searchable {
         return $newClientNum;
     }
 
+    function getExtraData(): array
+    {
+        $data = [];
+        $sql = "SELECT * FROM ".USER_CDATA_TABLE." WHERE user_id = ".$this->getId();
+        $res = db_query($sql, true);
+        if ($row = db_fetch_array($res)) {
+            $data = $row;
+        }
+
+        return $data;
+    }
+
 }
 
 class EmailAddress
