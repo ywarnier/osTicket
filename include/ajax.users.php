@@ -106,7 +106,9 @@ class UsersAjaxAPI extends AjaxController {
                     }
                 }
                 $name = Format::htmlchars(new UsersName($name));
-                $matches[] = array('email'=>$email, 'name'=>$name, 'info'=>"$email - $name",
+                $extra = User::getExtraDataById($id);
+                $info = strtoupper($name).', '.$extra['firstname'].' ('.$extra['clientnum'].')';
+                $matches[] = array('email'=>$email, 'name'=>$name, 'info'=>$info,
                     "id" => $id, "/bin/true" => $q);
             }
             usort($matches, function($a, $b) { return strcmp($a['name'], $b['name']); });

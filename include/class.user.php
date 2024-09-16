@@ -227,9 +227,9 @@ implements TemplateVariable, Searchable {
                 && Validator::is_email($vars['email'])) {
             $name = $vars['name'];
             if (is_array($name))
-                $name = implode(', ', $name);
+                {$name = implode(', ', $name);}
             elseif (!$name)
-                list($name) = explode('@', $vars['email'], 2);
+                {list($name) = explode('@', $vars['email'], 2);}
 
             $user = new User(array(
                 'name' => Format::htmldecode(Format::sanitize($name, false)),
@@ -242,9 +242,9 @@ implements TemplateVariable, Searchable {
             // Is there an organization registered for this domain
             list($mailbox, $domain) = explode('@', $vars['email'], 2);
             if (isset($vars['org_id']))
-                $user->set('org_id', $vars['org_id']);
+                {$user->set('org_id', $vars['org_id']);}
             elseif ($org = Organization::forDomain($domain))
-                $user->setOrganization($org, false);
+                {$user->setOrganization($org, false);}
 
             try {
                 $user->save(true);
@@ -269,7 +269,7 @@ implements TemplateVariable, Searchable {
     static function fromForm($form, $create=true) {
         global $thisstaff;
 
-        if(!$form) return null;
+        if(!$form) {return null;}
 
         //Validate the form
         $valid = true;
@@ -277,7 +277,7 @@ implements TemplateVariable, Searchable {
             return !isset($thisstaff) || $f->isRequiredForStaff() || $f->isVisibleToStaff();
         };
         if (!$form->isValid($filter))
-            $valid  = false;
+            {$valid  = false;}
 
         //Make sure the email is not in-use
         if (($field=$form->getField('email'))
@@ -293,9 +293,9 @@ implements TemplateVariable, Searchable {
     function getEmail() {
 
         if (!isset($this->_email))
-            $this->_email = new EmailAddress(sprintf('"%s" <%s>',
+            {$this->_email = new EmailAddress(sprintf('"%s" <%s>',
                     addcslashes($this->getName(), '"'),
-                    $this->default_email->address));
+                    $this->default_email->address));}
 
         return $this->_email;
     }
@@ -305,7 +305,7 @@ implements TemplateVariable, Searchable {
         $source = $cfg->getClientAvatarSource();
         $avatar = $source->getAvatar($this);
         if (isset($size))
-            $avatar->setSize($size);
+            {$avatar->setSize($size);}
         return $avatar;
     }
 
@@ -315,15 +315,15 @@ implements TemplateVariable, Searchable {
 
     function getPhoneNumber() {
         foreach ($this->getDynamicData() as $e)
-            if ($a = $e->getAnswer('phone'))
-                return $a;
+            {if ($a = $e->getAnswer('phone'))
+                {return $a;}}
     }
 
     function getName() {
         if (!$this->name)
-            list($name) = explode('@', $this->getDefaultEmailAddress(), 2);
+            {list($name) = explode('@', $this->getDefaultEmailAddress(), 2);}
         else
-            $name = $this->name;
+            {$name = $this->name;}
         return new UsersName($name);
     }
 
@@ -354,7 +354,7 @@ implements TemplateVariable, Searchable {
 
     function getLanguage($flags=false) {
         if ($acct = $this->getAccount())
-            return $acct->getLanguage($flags);
+            {return $acct->getLanguage($flags);}
     }
 
     function to_json() {
@@ -379,8 +379,8 @@ implements TemplateVariable, Searchable {
     function getVar($tag) {
         $tag = mb_strtolower($tag);
         foreach ($this->getDynamicData() as $e)
-            if ($a = $e->getAnswer($tag))
-                return $a;
+            {if ($a = $e->getAnswer($tag))
+                {return $a;}}
     }
 
     static function getVarScope() {
@@ -405,13 +405,13 @@ implements TemplateVariable, Searchable {
             $fname = $F->get('name') ?: ('field_'.$F->get('id'));
             # XXX: email in the model corresponds to `emails__address` ORM path
             if ($fname == 'email')
-                $fname = 'emails__address';
+                {$fname = 'emails__address';}
             if (!$F->hasData() || $F->isPresentationOnly())
-                continue;
+                {continue;}
             if (!$F->isStorable())
-                $base[$fname] = $F;
+                {$base[$fname] = $F;}
             else
-                $base["cdata__{$fname}"] = $F;
+                {$base["cdata__{$fname}"] = $F;}
         }
         return $base;
     }
@@ -445,12 +445,12 @@ implements TemplateVariable, Searchable {
 
             // Add in special `name` and `email` fields
             if ($entry->getDynamicForm()->get('type') != 'U')
-                continue;
+                {continue;}
 
             foreach (array('name', 'email') as $name) {
                 if ($f = $entry->getField($name))
-                    $vars['field.'.$f->get('id')] =
-                        $name == 'name' ? $this->getName() : $this->getEmail();
+                    {$vars['field.'.$f->get('id')] =
+                        $name == 'name' ? $this->getName() : $this->getEmail();}
             }
         }
 
@@ -469,9 +469,9 @@ implements TemplateVariable, Searchable {
 
                     foreach ($entry->getFields() as $f) {
                         if ($f->get('name') == 'name' && !$cb($f))
-                            $f->value = $this->getFullName();
+                            {$f->value = $this->getFullName();}
                         elseif ($f->get('name') == 'email' && !$cb($f))
-                            $f->value = $this->getEmail();
+                            {$f->value = $this->getEmail();}
                     }
                 }
 
@@ -485,7 +485,7 @@ implements TemplateVariable, Searchable {
     function getAccountStatus() {
 
         if (!($account=$this->getAccount()))
-            return __('Guest');
+            {return __('Guest');}
 
         return (string) $account->getStatus();
     }
@@ -500,7 +500,7 @@ implements TemplateVariable, Searchable {
 
         // user already registered?
         if ($this->getAccount())
-            return true;
+            {return true;}
 
         return UserAccount::register($this, $vars, $errors);
     }
@@ -515,10 +515,10 @@ implements TemplateVariable, Searchable {
             $records = $importer->importCsv(UserForm::getUserForm()->getFields(), $defaults);
             foreach ($records as $data) {
                 if (!Validator::is_email($data['email']) || empty($data['name']))
-                    throw new ImportError('Both `name` and `email` fields are required');
+                    {throw new ImportError('Both `name` and `email` fields are required');}
                 if (!($user = static::fromVars($data, true, true)))
-                    throw new ImportError(sprintf(__('Unable to import user: %s'),
-                        print_r(Format::htmlchars($data), true)));
+                    {throw new ImportError(sprintf(__('Unable to import user: %s'),
+                        print_r(Format::htmlchars($data), true)));}
                 $imported++;
             }
             db_autocommit(true);
@@ -532,7 +532,7 @@ implements TemplateVariable, Searchable {
 
     static function importFromPost($stream, $extra=array()) {
         if (!is_array($stream))
-            $stream = sprintf('name, email%s %s',PHP_EOL, $stream);
+            {$stream = sprintf('name, email%s %s',PHP_EOL, $stream);}
 
         return User::importCsv($stream, $extra);
     }
@@ -547,9 +547,9 @@ implements TemplateVariable, Searchable {
         foreach ($forms as $entry) {
             $entry->setSource($vars);
             if ($staff && !$entry->isValidForStaff(true))
-                $valid = false;
+                {$valid = false;}
             elseif (!$staff && !$entry->isValidForClient(true))
-                $valid = false;
+                {$valid = false;}
             elseif ($entry->getDynamicForm()->get('type') == 'U'
                     && ($f=$entry->getField('email'))
                     && $isEditable($f)
@@ -561,12 +561,12 @@ implements TemplateVariable, Searchable {
             }
 
             if (!$valid)
-                $errors = array_merge($errors, $entry->errors());
+                {$errors = array_merge($errors, $entry->errors());}
         }
 
 
         if (!$valid)
-            return false;
+            {return false;}
 
         // Save the entries
         foreach ($forms as $entry) {
@@ -584,7 +584,7 @@ implements TemplateVariable, Searchable {
                 if (($name = $entry->getField('name')) && $isEditable($name) ) {
                     $name = $name->getClean();
                     if (is_array($name))
-                        $name = implode(', ', $name);
+                        {$name = implode(', ', $name);}
                     if ($this->name != $name) {
                         $type = array('type' => 'edited', 'key' => 'Name');
                         Signal::send('object.edited', $this, $type);
@@ -633,25 +633,25 @@ implements TemplateVariable, Searchable {
         if (Validator::is_email($this->name)) {
             list($box, $domain) = explode('@', $this->name, 2);
             if (strpos($box, '.') !== false)
-                $this->name = str_replace('.', ' ', $box);
+                {$this->name = str_replace('.', ' ', $box);}
             else
-                $this->name = $box;
+                {$this->name = $box;}
             $this->name = mb_convert_case($this->name, MB_CASE_TITLE);
         }
 
         if (count($this->dirty)) //XXX: doesn't work??
-            $this->set('updated', new SqlFunction('NOW'));
+            {$this->set('updated', new SqlFunction('NOW'));}
         return parent::save($refetch);
     }
 
     function delete() {
         // Refuse to delete a user with tickets
         if ($this->tickets->count())
-            return false;
+            {return false;}
 
         // Delete account record (if any)
         if ($this->getAccount())
-            $this->getAccount()->delete();
+            {$this->getAccount()->delete();}
 
         // Delete emails.
         $this->emails->expunge();
@@ -672,9 +672,9 @@ implements TemplateVariable, Searchable {
         $status_id = TicketStatus::lookup(array('state' => 'deleted'));
         foreach($this->tickets as $ticket) {
             if (!$T = Ticket::lookup($ticket->getId()))
-                continue;
+                {continue;}
             if (!$T->setStatus($status_id))
-                return false;
+                {return false;}
         }
         $this->tickets->reset();
         return true;
@@ -687,14 +687,14 @@ implements TemplateVariable, Searchable {
     static function getNameById($id) {
         /* @var User $user */
         if ($user = static::lookup($id))
-            return $user->getName();
+            {return $user->getName();}
     }
 
     static function getLink($id) {
         global $thisstaff;
 
         if (!$id || !$thisstaff)
-            return false;
+            {return false;}
 
         return ROOT_PATH . sprintf('scp/users.php?id=%s', $id);
     }
@@ -708,10 +708,10 @@ implements TemplateVariable, Searchable {
                 ['user__id', 'equal', $this->getId()],
             ];
             if ($collabs)
-                $filter = [
+                {$filter = [
                     ['user__emails__address', 'equal', $email],
                     ['thread__collaborators__user__emails__address', 'equal',  $email],
-                ];
+                ];}
             $this->_queue = new AdhocSearch(array(
                 'id' => 'adhoc,uid'.$this->getId(),
                 'root' => 'T',
@@ -756,6 +756,13 @@ implements TemplateVariable, Searchable {
         return $data;
     }
 
+    static function getExtraDataById(int $id): array
+    {
+        if ($user = static::lookup($id)) {
+            return $user->getExtraData();
+        }
+        return [];
+    }
 }
 
 class EmailAddress
