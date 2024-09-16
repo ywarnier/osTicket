@@ -4863,6 +4863,17 @@ EOF;
 
         return $date->format('d-m-y H:i');
     }
+    static function getUserIdFromTicketId(int $ticketId): ?int
+    {
+        $data = null;
+        $sql = "SELECT user_id FROM ".TICKET_TABLE." WHERE ticket_id = ".$ticketId;
+        $res = db_query($sql, true);
+        if ($row = db_fetch_array($res)) {
+            $data = $row['user_id'];
+        }
+
+        return $data;
+    }
 }
 RolePermission::register(/* @trans */ 'Tickets', Ticket::getPermissions(), true);
 

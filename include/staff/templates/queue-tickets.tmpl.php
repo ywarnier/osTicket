@@ -259,6 +259,8 @@ foreach ($columns as $C) {
 <?php
 foreach ($tickets as $T) {
     $extra = Ticket::getExtraDataById($T['ticket_id']);
+    $ticketUserId = Ticket::getUserIdFromTicketId($T['ticket_id']);
+    $userExtra = User::getExtraDataById($ticketUserId);
     echo '<tr>';
     if ($canManageTickets) { ?>
         <td><input type="checkbox" class="ckb" name="tids[]"
@@ -267,6 +269,9 @@ foreach ($tickets as $T) {
     }
     foreach ($columns as $C) {
         list($contents, $styles) = $C->render($T);
+        if ($C->getName() == "Nom d'utilisateur") {
+            $contents = strtoupper($contents).', '.$userExtra['firstname'].' ('.$userExtra['clientnum'].')';
+        }
         if ($style = $styles ? 'style="'.$styles.'"' : '') {
             echo "<td $style><div $style>$contents</div></td>";
         }
