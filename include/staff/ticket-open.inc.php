@@ -81,7 +81,9 @@ if ($_POST)
             </th>
         </tr>
               <?php
-              if ($user) { ?>
+              if ($user) {
+                  $extra = User::getExtraDataById($user->getId());
+                  ?>
                   <tr><td><?php echo __('User'); ?>:</td><td>
                     <div id="user-info">
                       <input type="hidden" name="uid" id="uid" value="<?php echo $user->getId(); ?>" />
@@ -98,8 +100,8 @@ if ($_POST)
                       <a href="#">
                       <?php } ?>
                       <i class="icon-user"></i>
-                      <span id="user-name"><?php echo Format::htmlchars($user->getName()); ?></span>
-                      &lt;<span id="user-email"><?php echo $user->getEmail(); ?></span>&gt;
+                      <span id="user-name"><?php echo Format::htmlchars(strtoupper($user->getName()).', '.$extra['firstname'].' ('.$extra['clientnum'].')'); ?></span>
+                      <!--&lt;<span id="user-email"><?php echo $user->getEmail(); ?></span>&gt;-->
                     </a>
                     <a class="inline button" style="overflow:inherit" href="#"
                     onclick="javascript:
