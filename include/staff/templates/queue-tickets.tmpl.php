@@ -22,6 +22,7 @@ if ($queue->isAQueue() || $queue->isASubQueue())
 TicketForm::ensureDynamicDataView();
 
 // Identify columns of output
+/** @var QueueColumn[] $columns */
 $columns = $queue->getColumns();
 
 // Figure out REFRESH url — which might not be accurate after posting a
@@ -251,11 +252,13 @@ foreach ($columns as $C) {
         $C->getWidth(), $C->id, $heading);
 }
 ?>
+        <th>Rendez-vous</th>
     </tr>
   </thead>
   <tbody>
 <?php
 foreach ($tickets as $T) {
+    $extra = Ticket::getExtraDataById($T['ticket_id']);
     echo '<tr>';
     if ($canManageTickets) { ?>
         <td><input type="checkbox" class="ckb" name="tids[]"
@@ -271,13 +274,14 @@ foreach ($tickets as $T) {
             echo "<td>$contents</td>";
         }
     }
+    echo "<td>".Ticket::getNiceDateFromDBDate($extra['meetdate'])."</td>";
     echo '</tr>';
 }
 ?>
   </tbody>
   <tfoot>
     <tr>
-      <td colspan="<?php echo count($columns)+1; ?>">
+      <td colspan="<?php echo count($columns)+2; ?>">
         <?php if ($count && $canManageTickets) {
         echo __('Select');?>:&nbsp;
         <a id="selectAll" href="#ckb"><?php echo __('All');?></a>&nbsp;&nbsp;

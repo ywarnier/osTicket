@@ -4837,6 +4837,32 @@ EOF;
             }
         }
     }
+
+    function getExtraData(): array
+    {
+        $data = [];
+        $sql = "SELECT * FROM ".TICKET_CDATA_TABLE." WHERE ticket_id = ".$this->getId();
+        $res = db_query($sql, true);
+        if ($row = db_fetch_array($res)) {
+            $data = $row;
+        }
+
+        return $data;
+    }
+    static function getExtraDataById(int $id): array
+    {
+        if ($user = static::lookup($id)) {
+            return $user->getExtraData();
+        }
+        return [];
+    }
+    static function getNiceDateFromDBDate(string $dbDate): string
+    {
+        $date = new DateTime($dbDate, new DateTimeZone('Europe/Paris'));
+        $date->setTimezone(new DateTimeZone('UTC'));
+
+        return $date->format('d-m-y H:i');
+    }
 }
 RolePermission::register(/* @trans */ 'Tickets', Ticket::getPermissions(), true);
 
