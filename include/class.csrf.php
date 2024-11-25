@@ -56,6 +56,7 @@ Class CSRF {
     function rotate() {
         $this->csrf['token'] = sha1(session_id().Crypto::random(16).SECRET_SALT);
         $this->csrf['time'] = time();
+        $_SESSION['csrf'] = $this->csrf;
     }
 
     function getToken() {
