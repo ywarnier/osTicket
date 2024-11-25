@@ -388,8 +388,10 @@ abstract class AuthenticationBackend extends ServiceRegistry {
                     return $result;
                 }
                 elseif ($result instanceof ClientCreateRequest
-                        && $bk instanceof UserAuthenticationBackend)
+                        && $bk instanceof UserAuthenticationBackend) {
+
                     return $result;
+                }
                 elseif ($result instanceof AccessDenied) {
                     break;
                 }
@@ -400,11 +402,13 @@ abstract class AuthenticationBackend extends ServiceRegistry {
             }
         }
 
-        if (!$result && $forcedAuth)
+        if (!$result && $forcedAuth) {
             $result = new  AccessDenied(__('Unknown user'));
+        }
 
-        if ($result && $result instanceof AccessDenied)
+        if ($result && $result instanceof AccessDenied) {
             $errors['err'] = $result->reason;
+        }
 
         self::authAudit($result);
     }
@@ -708,7 +712,7 @@ abstract class StaffAuthenticationBackend  extends AuthenticationBackend {
         list($id, $auth) = explode(':', $_SESSION['_auth']['staff']['key']);
 
         if (!($bk=static::getBackend($id)) //get the backend
-                || !($staff = $bk->validate($auth)) //Get AuthicatedUser
+                || !($staff = $bk->validate($auth)) //Get AuthenticatedUser
                 || !($staff instanceof Staff)
                 || !$staff->isActive()
                 || $staff->getId() != $_SESSION['_auth']['staff']['id'] // check ID
@@ -1243,24 +1247,33 @@ class PasswordResetTokenBackend extends StaffAuthenticationBackend {
     function signOn($errors=array()) {
         global $ost;
 
-        if (!isset($_POST['userid']) || !isset($_POST['token']))
+        if (!isset($_POST['userid']) || !isset($_POST['token'])) {
+
             return false;
-        elseif (!($_config = new Config('pwreset')))
+        }
+        elseif (!($_config = new Config('pwreset'))) {
+
             return false;
+        }
 
         $staff = StaffSession::lookup($_POST['userid']);
-        if (!$staff || !$staff->getId())
+        if (!$staff || !$staff->getId()) {
             $errors['msg'] = __('Invalid user-id given');
+        }
         elseif (!($id = $_config->get($_POST['token']))
-                || $id != $staff->getId())
+                || $id != $staff->getId()) {
             $errors['msg'] = __('Invalid reset token');
+        }
         elseif (!($ts = $_config->lastModified($_POST['token']))
-                && ($ost->getConfig()->getPwResetWindow() < (time() - strtotime($ts))))
+                && ($ost->getConfig()->getPwResetWindow() < (time() - strtotime($ts)))) {
             $errors['msg'] = __('Invalid reset token');
-        elseif (!$staff->forcePasswdRest())
+        }
+        elseif (!$staff->forcePasswdRest()) {
             $errors['msg'] = __('Unable to reset password');
-        else
+        }
+        else {
             return $staff;
+        }
     }
 
     function login($staff, $bk) {
