@@ -740,9 +740,15 @@ abstract class StaffAuthenticationBackend  extends AuthenticationBackend {
     protected function validate($authkey) {
 
         if (($staff = StaffSession::lookup($authkey))
-            && $staff->getId()
-            && $staff->isActive())
-            return $staff;
+            && $staff->getId()) {
+            if ($staff->isActive()) {
+                return $staff;
+            } else {
+                error_log('Could not authenticate user '.$authkey.' because it is locked (see agent edit form)');
+            }
+        } else {
+            error_log('Could not find user '.$authkey.' because it is locked (see agent edit form)');
+        }
     }
 }
 
