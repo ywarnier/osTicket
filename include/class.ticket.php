@@ -4856,7 +4856,7 @@ EOF;
         }
         return [];
     }
-    static function getNiceDateFromDBDate(string $dbDate = ''): string
+    static function getNiceDateFromDBDate(?string $dbDate = ''): string
     {
         if (empty($dbDate)) {
             return '';
