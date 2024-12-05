@@ -4856,8 +4856,11 @@ EOF;
         }
         return [];
     }
-    static function getNiceDateFromDBDate(string $dbDate): string
+    static function getNiceDateFromDBDate(string $dbDate = ''): string
     {
+        if (empty($dbDate)) {
+            return '';
+        }
         $date = new DateTime($dbDate, new DateTimeZone('Europe/Paris'));
         $date->setTimezone(new DateTimeZone('UTC'));
 
