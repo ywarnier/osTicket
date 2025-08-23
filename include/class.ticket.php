@@ -4862,7 +4862,7 @@ EOF;
             return '';
         }
         $date = new DateTime($dbDate, new DateTimeZone('Europe/Paris'));
-        $date->setTimezone(new DateTimeZone('UTC'));
+        //$date->setTimezone(new DateTimeZone('UTC'));
 
         return $date->format('d-m-y H:i');
     }
