@@ -436,7 +436,7 @@ PO-Revision-Date: 2023-07-11 20:58
   'Agents who are primary members of %s' => 'Agents étant membres primaires de %s',
   'Agents who have extended access to %s' => 'Agents ayant un accès étendu à %s',
   'Alert' => 'Alerte ',
-  'Alert All' => 'Alerta à tous',
+  'Alert All' => 'Alerte à tous',
   'Alert sent out to Agents when internal activity such as an internal note or an agent reply is appended to a ticket.' => 'Alertes envoyées aux agents lorsqu\'une activité interne comme une note interne ou la réponse d\'un agent est ajoutée à un ticket.',
   'Alert sent to agents on stale or overdue task.' => 'Alerte envoyée aux agents sur les tâches en retard ou stagnantes.',
   'Alert sent to agents on stale or overdue tickets.' => 'Alerte envoyée aux agents sur les tickets en retard.',
