@@ -579,7 +579,7 @@ if($ticket->isOverdue())
                 </tr>
                 <?php
                 if($ticket->isOpen()){ ?>
-                <tr>
+                <!--tr>
                     <th><?php echo __('Due Date');?>:</th>
                     <?php
                          if ($role->hasPerm(Ticket::PERM_EDIT)) {
@@ -598,7 +598,7 @@ if($ticket->isOverdue())
                       <?php } else { ?>
                            <td><?php echo Format::datetime($ticket->getEstDueDate()); ?></td>
                       <?php } ?>
-                </tr>
+                </tr-->
                 <?php
                 }else { ?>
                 <tr>

@@ -135,7 +135,7 @@ if ($_POST)
                 &nbsp;<font class="error">&nbsp;<?php echo $errors['slaId']; ?></font>
             </td>
         </tr>
-        <tr>
+        <!--tr>
             <td width="160">
                 <?php echo __('Due Date');?>:
             </td>
@@ -148,7 +148,7 @@ if ($_POST)
                 <em><?php echo __('Time is based on your time zone');?>
                     (<?php echo $cfg->getTimezone($thisstaff); ?>)</em>
             </td>
-        </tr>
+        </tr-->
     </tbody>
 </table>
 <table class="form_table dynamic-forms" width="940" border="0" cellspacing="0" cellpadding="2">

@@ -297,7 +297,7 @@ if ($_POST)
             </td>
          </tr-->
 
-         <tr>
+         <!--tr>
             <td width="160">
                 <?php echo __('Due Date');?>:
             </td>
@@ -310,7 +310,7 @@ if ($_POST)
                 <em><?php echo __('Time is based on your time
                         zone');?>&nbsp;(<?php echo $cfg->getTimezone($thisstaff); ?>)</em>
             </td>
-        </tr>
+        </tr-->
 
         <?php
         if($thisstaff->hasPerm(Ticket::PERM_ASSIGN, false)) { ?>
