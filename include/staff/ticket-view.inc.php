@@ -391,7 +391,7 @@ if($ticket->isOverdue())
                                     });
                             return false;
                             "><i class="icon-user"></i> <span id="user-<?php echo $ticket->getOwnerId(); ?>-name"
-                            ><?php echo Format::htmlchars($ticket->getName());
+                            ><?php echo Format::htmlchars($ticket->getOwner()->getFirstName() . ' ' . $ticket->getName());
                         ?></span></a>
                         <?php
                         if ($user) { ?>
