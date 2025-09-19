@@ -252,7 +252,7 @@ foreach ($columns as $C) {
         $C->getWidth(), $C->id, $heading);
 }
 ?>
-        <th>Rendez-vous</th>
+        <!--th>Rendez-vous</th-->
     </tr>
   </thead>
   <tbody>
@@ -279,7 +279,7 @@ foreach ($tickets as $T) {
             echo "<td>$contents</td>";
         }
     }
-    echo "<td>".Ticket::getNiceDateFromDBDate($extra['meetdate'])."</td>";
+    //echo "<td>".Ticket::getNiceDateFromDBDate($extra['meetdate'])."</td>";
     echo '</tr>';
 }
 ?>
