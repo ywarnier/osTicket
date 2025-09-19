@@ -655,7 +655,7 @@ foreach (DynamicFormEntry::forTicket($ticket->getId()) as $form) {
     //           array('email', ...))));
     $answers = $form->getAnswers()->exclude(Q::any(array(
         'field__flags__hasbit' => DynamicFormField::FLAG_EXT_STORED,
-        'field__name__in' => array('subject', 'priority'),
+        'field__name__in' => array('priority'),
         'field__id__in' => $disabled,
     )));
     $displayed = array();
