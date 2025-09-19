@@ -188,17 +188,12 @@ implements RestrictedAccess, Threadable, Searchable {
 
     // Ticket Sources
     static protected $sources =  array(
-            'In person' =>
-            /* @trans */ 'In person',
             'Phone' =>
             /* @trans */ 'Phone',
             'Email' =>
             /* @trans */ 'Email',
-
-            'Web' =>
-            /* @trans */ 'Web',
-            'API' =>
-            /* @trans */ 'API',
+            'Welcome' =>
+            /* @trans */ 'Accueil',
             'Other' =>
             /* @trans */ 'Other',
             );

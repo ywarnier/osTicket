@@ -73,7 +73,7 @@ if ($_POST)
                     <option value="" selected >&mdash; <?php
                         echo __('Select Source');?> &mdash;</option>
                     <?php
-                    $source = $info['source'] ?: 'In person';
+                    $source = $info['source'] ?: 'Phone';
                     foreach (Ticket::getSources() as $k => $v) {
                         echo sprintf('<option value="%s" %s>%s</option>',
                                 $k,
