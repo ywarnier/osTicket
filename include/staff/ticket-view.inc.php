@@ -1441,6 +1441,10 @@ $(function() {
 });
 function saveDraft() {
     redactor = $('#response').redactor('plugin.draft');
+    if (typeof redactor === 'undefined' || !redactor || !redactor.opts) {
+        console.log('Redactor not initialized, skipping draft save.');
+        return false;
+    }
     if (redactor.opts.draftId)
         $('#response').redactor('plugin.draft.saveDraft');
 }
