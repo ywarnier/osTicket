@@ -63,7 +63,7 @@ $extras = new ArrayObject();
                 <?php
 }
                 } ?>
-<?php if ($thisstaff->hasPerm(User::PERM_EDIT)) { ?>
+<?php if ($thisstaff->hasPerm(User::PERM_MANAGE)) { ?>
                 <li><a href="#ajax.php/users/<?php echo $user->getId();
                     ?>/forms/manage" onclick="javascript:
                     $.dialog($(this).attr('href').substr(1), 201);
