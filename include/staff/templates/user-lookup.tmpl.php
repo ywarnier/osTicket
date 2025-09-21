@@ -44,7 +44,7 @@ if ($thisstaff->hasPerm(User::PERM_CREATE)) { ?>
         <?php echo __('Add New User'); ?></a>
 <?php }
 if ($user) { ?>
-    <div><strong id="user-name"><?php echo Format::htmlchars($user->getName()->getOriginal()); ?></strong></div>
+    <div><strong id="user-name"><?php echo Format::htmlchars($user->getVar('firstname').' '.$user->getName()->getOriginal()); ?></strong></div>
     <div>&lt;<span id="user-email"><?php echo $user->getEmail(); ?></span>&gt;</div>
     <?php
     if ($org=$user->getOrganization()) { ?>

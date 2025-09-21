@@ -309,7 +309,7 @@ class TicketsAjaxAPI extends AjaxController {
 
         $info = array(
             'title' => sprintf(__('Ticket #%s: %s'), $ticket->getNumber(),
-                Format::htmlchars($user->getName()))
+                Format::htmlchars($user->getVar('firstname').' '.$user->getName()))
             );
 
         ob_start();
