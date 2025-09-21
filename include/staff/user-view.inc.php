@@ -105,21 +105,9 @@ if ($thisstaff->hasPerm(User::PERM_EDIT)) { ?>
                     </td>
                 </tr>
                 <tr>
-                    <th><?php echo __('Organization'); ?>:</th>
+                    <th><?php echo __('Mobile Number'); ?>:</th>
                     <td>
-                        <span id="user-<?php echo $user->getId(); ?>-org">
-                        <?php
-                            if ($org)
-                                echo sprintf('<a href="#users/%d/org" class="user-action">%s</a>',
-                                        $user->getId(), $org->getName());
-                            elseif ($thisstaff->hasPerm(User::PERM_EDIT)) {
-                                echo sprintf(
-                                    '<a href="#users/%d/org" class="user-action">%s</a>',
-                                    $user->getId(),
-                                    __('Add Organization'));
-                            }
-                        ?>
-                        </span>
+                        <?php echo $user->getVar('mobilephone'); ?>
                     </td>
                 </tr>
             </table>
