@@ -269,7 +269,7 @@ foreach ($tickets as $T) {
     }
     foreach ($columns as $C) {
         list($contents, $styles) = $C->render($T);
-        if ($C->getName() == "Nom d'utilisateur") {
+        if ($C->getName() == "Nom d'usager") {
             $contents = strtoupper($contents).', '.$userExtra['firstname'].' ('.$userExtra['clientnum'].')';
         }
         if ($style = $styles ? 'style="'.$styles.'"' : '') {
