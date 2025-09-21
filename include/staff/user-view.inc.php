@@ -33,9 +33,9 @@ $extras = new ArrayObject();
             <?php echo __('Manage Account'); ?></a>
             <?php
             } else { ?>
-            <a id="user-register" class="action-button pull-right user-action"
+            <!--a id="user-register" class="action-button pull-right user-action"
             href="#users/<?php echo $user->getId(); ?>/register"><i class="icon-smile"></i>
-            <?php echo __('Register'); ?></a>
+            <?php echo __('Register'); ?></a-->
             <?php
             } ?>
 <?php } ?>
