@@ -475,8 +475,8 @@ print $response_form->getField('attachments')->render();
     </tbody>
 </table>
 <p style="text-align:center;">
-    <input type="submit" name="submit" value="<?php echo _P('action-button', 'Open');?>">
-    <input type="reset"  name="reset"  value="<?php echo __('Reset');?>">
+    <input type="submit" name="submit" value="<?php echo _P('action-button', 'Save');?>">
+    <!--input type="reset"  name="reset"  value="<?php echo __('Reset');?>"-->
     <input type="button" name="cancel" value="<?php echo __('Cancel');?>" onclick="javascript:
         $(this.form).find('textarea.richtext')
           .redactor('plugin.draft.deleteDraft');
