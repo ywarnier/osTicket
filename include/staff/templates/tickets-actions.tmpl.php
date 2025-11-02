@@ -8,7 +8,7 @@ if ($agent->canManageTickets())
 
 // Mass Claim/Assignment
 if ($agent->hasPerm(Ticket::PERM_ASSIGN, false)) {?>
-<span
+<!--span
     class="action-button" data-placement="bottom"
     data-dropdown="#action-dropdown-assign" data-toggle="tooltip" title=" <?php
     echo __('Assign'); ?>">
@@ -29,7 +29,10 @@ if ($agent->hasPerm(Ticket::PERM_ASSIGN, false)) {?>
         href="#tickets/mass/assign/teams"><i
         class="icon-group"></i> <?php echo __('Team'); ?></a>
   </ul>
-</div>
+</div-->
+<a class="button action-button tickets-action" id="action-dropdown-assign" data-placement="bottom"
+   data-toggle="tooltip" title="<?php echo __('Assign'); ?>"
+   href="#tickets/mass/assign/agents"><i class="icon-user"></i></a>
 <?php
 }
 
