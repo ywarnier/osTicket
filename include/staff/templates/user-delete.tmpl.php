@@ -73,13 +73,11 @@ else { ?>
     }
     ?>
         <p class="full-width">
-        <span class="buttons pull-left">
-            <input type="reset" value="<?php echo __('Reset'); ?>">
+        <span class="buttons pull-right">
+            <!-- input type="reset" value="<?php echo __('Reset'); ?>" -->
+            <input type="submit" value="<?php echo __('Yes, Delete User'); ?>">
             <input type="button" name="cancel" class="close"
                 value="<?php echo __('No, Cancel'); ?>">
-        </span>
-        <span class="buttons pull-right">
-            <input type="submit" value="<?php echo __('Yes, Delete User'); ?>">
         </span>
         </p>
     </form>
