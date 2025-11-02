@@ -336,7 +336,7 @@ if($ticket->isOverdue())
                           <td><?php echo ($S = $ticket->getStatus()) ? $S->display() : ''; ?></td>
                       <?php } ?>
                 </tr>
-                <tr>
+                <!--tr>
                     <th><?php echo __('Priority');?>:</th>
                       <?php
                       if ($role->hasPerm(Ticket::PERM_EDIT)
@@ -350,8 +350,8 @@ if($ticket->isOverdue())
                       <?php } else { ?>
                            <td><?php echo $ticket->getPriority(); ?></td>
                       <?php } ?>
-                </tr>
-                <tr>
+                </tr-->
+                <!--tr>
                     <th><?php echo __('Department');?>:</th>
                     <?php
                     if ($role->hasPerm(Ticket::PERM_TRANSFER)) {?>
@@ -368,7 +368,7 @@ if($ticket->isOverdue())
                   }else {?>
                     <td><?php echo Format::htmlchars($ticket->getDeptName()); ?></td>
                   <?php } ?>
-                </tr>
+                </tr-->
                 <tr>
                     <th><?php echo __('Create Date');?>:</th>
                     <td><?php echo Format::datetime($ticket->getCreateDate()); ?></td>
@@ -447,7 +447,7 @@ if($ticket->isOverdue())
                     </td>
                 </tr>
 <?php   if ($user->getOrganization()) { ?>
-                <tr>
+                <!--tr>
                     <th><?php echo __('Organization'); ?>:</th>
                     <td><i class="icon-building"></i>
                     <?php echo Format::htmlchars($user->getOrganization()->getName()); ?>
@@ -484,7 +484,7 @@ if($ticket->isOverdue())
                                 </ul>
                             </div>
                         </td>
-                    </tr>
+                    </tr-->
 <?php   } # end if (user->org) ?>
                 <tr>
                   <th><?php echo __('Source'); ?>:</th>
@@ -562,7 +562,7 @@ if($ticket->isOverdue())
                 </tr>
                 <?php
                 } ?>
-                <tr>
+                <!--tr>
                     <th><?php echo __('SLA Plan');?>:</th>
                     <td>
                     <?php
@@ -576,7 +576,7 @@ if($ticket->isOverdue())
                         <span id="field_sla"><?php echo $sla ?: __('None'); ?></span>
                       <?php } ?>
                     </td>
-                </tr>
+                </tr-->
                 <?php
                 if($ticket->isOpen()){ ?>
                 <!--tr>
@@ -634,10 +634,10 @@ if($ticket->isOverdue())
                     <th nowrap><?php echo __('Last Message');?>:</th>
                     <td><?php echo Format::datetime($ticket->getLastMsgDate()); ?></td>
                 </tr>
-                <tr>
+                <!--tr>
                     <th nowrap><?php echo __('Last Response');?>:</th>
                     <td><?php echo Format::datetime($ticket->getLastRespDate()); ?></td>
-                </tr>
+                </tr-->
             </table>
         </td>
     </tr>
