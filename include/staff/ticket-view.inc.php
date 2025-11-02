@@ -73,10 +73,10 @@ if($ticket->isOverdue())
             if ($thisstaff->hasPerm(Email::PERM_BANLIST)
                     || $role->hasPerm(Ticket::PERM_EDIT)
                     || ($dept && $dept->isManager($thisstaff))) { ?>
-            <span class="action-button pull-right" data-placement="bottom" data-dropdown="#action-dropdown-more" data-toggle="tooltip" title="<?php echo __('More');?>">
+            <!--span class="action-button pull-right" data-placement="bottom" data-dropdown="#action-dropdown-more" data-toggle="tooltip" title="<?php echo __('More');?>">
                 <i class="icon-caret-down pull-right"></i>
                 <span ><i class="icon-cog"></i></span>
-            </span>
+            </span-->
             <?php
             }
 
@@ -135,26 +135,26 @@ if($ticket->isOverdue())
                         && (!$dept->assignMembersOnly()
                             || $dept->isMember($thisstaff))
                         ) { ?>
-                 <li><a class="no-pjax ticket-action"
+                 <!--li><a class="no-pjax ticket-action"
                     data-redirect="tickets.php?id=<?php echo
                     $ticket->getId(); ?>"
                     href="#tickets/<?php echo $ticket->getId(); ?>/claim"><i
-                    class="icon-chevron-sign-down"></i> <?php echo __('Claim'); ?></a>
+                    class="icon-chevron-sign-down"></i> <?php echo __('Claim'); ?></a></li-->
                 <?php
                 } ?>
                  <li><a class="no-pjax ticket-action"
                     data-redirect="tickets.php"
                     href="#tickets/<?php echo $ticket->getId(); ?>/assign/agents"><i
-                    class="icon-user"></i> <?php echo __('Agent'); ?></a>
-                 <li><a class="no-pjax ticket-action"
+                                 class="icon-user"></i> <?php echo __('Agent'); ?></a></li>
+                 <!--li><a class="no-pjax ticket-action"
                     data-redirect="tickets.php"
                     href="#tickets/<?php echo $ticket->getId(); ?>/assign/teams"><i
-                    class="icon-group"></i> <?php echo __('Team'); ?></a>
+                    class="icon-group"></i> <?php echo __('Team'); ?></a></li-->
               </ul>
             </div>
             <?php
             } ?>
-            <div id="action-dropdown-more" class="action-dropdown anchor-right">
+            <!--div id="action-dropdown-more" class="action-dropdown anchor-right">
               <ul>
                 <?php
                  if ($role->hasPerm(Ticket::PERM_EDIT)) { ?>
@@ -279,7 +279,7 @@ if($ticket->isOverdue())
                  }
                 ?>
               </ul>
-            </div>
+            </div-->
                 <?php
                 if (count($children) != 0)
                     echo sprintf('<span style="font-weight: 700; line-height: 26px;">%s</span>', __('PARENT'));
