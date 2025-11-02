@@ -431,8 +431,8 @@ if($ticket->isOverdue())
                                 } else
                                   $recipients = 0;
 
-                             echo sprintf('<span><a class="manage-collaborators preview"
-                                    href="#thread/%d/collaborators/1"><span id="t%d-recipients"><i class="icon-group"></i> (%s)</span></a></span>',
+                             echo sprintf('<!--span><a class="manage-collaborators preview"
+                                    href="#thread/%d/collaborators/1"><span id="t%d-recipients"><i class="icon-group"></i> (%s)</span></a></span-->',
                                     $ticket->getThreadId(),
                                     $ticket->getThreadId(),
                                     $recipients);
