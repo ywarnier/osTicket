@@ -50,7 +50,7 @@ if ($user) { ?>
     /* if ($org=$user->getOrganization()) { ?>
     <div><span id="user-org"><?php echo $org->getName(); ?></span></div>
     <?php
-    }/* ?>
+    }*/ ?>
     <table style="margin-top: 1em;">
 <?php foreach ($user->getDynamicData() as $entry) { ?>
     <tr><td colspan="2" style="border-bottom: 1px dotted black"><strong><?php
