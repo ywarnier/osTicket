@@ -103,12 +103,11 @@ if ($total) { ?>
             <?php
             } ?>
             <th width="10%"><?php echo __('Ticket'); ?></th>
-            <th width="18%"><?php echo __('Last Updated'); ?></th>
             <th width="8%"><?php echo __('Status'); ?></th>
+            <th width="18%"><?php echo __('Help Topic'); ?></th>
             <th width="30%"><?php echo __('Subject'); ?></th>
             <?php
             if ($user) { ?>
-            <th width="15%"><?php echo __('Department'); ?></th>
             <th width="15%"><?php echo __('Assignee'); ?></th>
             <?php
             } else { ?>
@@ -127,6 +126,7 @@ if ($total) { ?>
             $flag='locked';
         elseif ($T['isoverdue'])
             $flag='overdue';
+        $ticketObject = Ticket::lookup($T['ticket_id']);
 
         $assigned='';
         if ($T['staff_id'])
@@ -165,8 +165,8 @@ if ($total) { ?>
                     echo '<span class="pull-right faded-more" data-toggle="tooltip" title="'
                             .__('Collaborator').'"><i class="icon-eye-open"></i></span>';
             ?></td>
-            <td nowrap><?php echo Format::datetime($T['lastupdate']); ?></td>
             <td><?php echo $status; ?></td>
+            <td nowrap><?php echo $ticketObject->getHelpTopic(); ?></td>
             <td><a class="truncate <?php if ($flag) { ?> Icon <?php echo $flag; ?>Ticket" title="<?php echo ucfirst($flag); ?> Ticket<?php } ?>"
                 style="max-width: 230px;"
                 href="tickets.php?id=<?php echo $T['ticket_id']; ?>"><?php echo $subject; ?></a>
@@ -188,8 +188,6 @@ if ($total) { ?>
             <?php
             if ($user) {
                 $dept = Dept::getLocalById($T['dept_id'], 'name', $T['dept__name']); ?>
-            <td><span class="truncate" style="max-wdith:125px"><?php
-                echo Format::htmlchars($dept); ?></span></td>
             <td><span class="truncate" style="max-width:125px"><?php
                 echo Format::htmlchars($assigned); ?></span></td>
             <?php
