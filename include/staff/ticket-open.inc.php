@@ -318,7 +318,7 @@ if ($_POST)
             <td width="160"><?php echo __('Assign To');?>:</td>
             <td>
                 <select id="assignId" name="assignId">
-                    <option value="0" selected="selected">&mdash; <?php echo __('Select an Agent OR a Team');?> &mdash;</option>
+                    <option value="0" selected="selected">&mdash; <?php echo __('Select an Agent');?> &mdash;</option>
                     <?php
                     $users = Staff::getStaffMembers(array(
                                 'available' => true,
@@ -334,7 +334,7 @@ if ($_POST)
                         echo '</OPTGROUP>';
                     }
 
-                    if(($teams=Team::getActiveTeams())) {
+                    /*if(($teams=Team::getActiveTeams())) {
                         echo '<OPTGROUP label="'.sprintf(__('Teams (%d)'), count($teams)).'">';
                         foreach($teams as $id => $name) {
                             $k="t$id";
@@ -343,6 +343,7 @@ if ($_POST)
                         }
                         echo '</OPTGROUP>';
                     }
+                    */
                     ?>
                 </select>&nbsp;<span class='error'>&nbsp;<?php echo $errors['assignId']; ?></span>
             </td>
