@@ -315,7 +315,7 @@ if ($_POST)
         <?php
         if($thisstaff->hasPerm(Ticket::PERM_ASSIGN, false)) { ?>
         <tr>
-            <td width="160"><?php echo __('Assign To');?>:</td>
+            <td width="160" class="required"><?php echo __('Assign To');?>:</td>
             <td>
                 <select id="assignId" name="assignId">
                     <option value="0" selected="selected">&mdash; <?php echo __('Select an Agent');?> &mdash;</option>
@@ -345,7 +345,7 @@ if ($_POST)
                     }
                     */
                     ?>
-                </select>&nbsp;<span class='error'>&nbsp;<?php echo $errors['assignId']; ?></span>
+                </select>&nbsp;<span class='error'><b>*</b>&nbsp;&nbsp;<?php echo $errors['assignId']; ?></span>
             </td>
         </tr>
         <?php } ?>
