@@ -140,12 +140,12 @@ if ($ticket && $ticket->getOwnerId() == $user->getId())
     <hr>
     <p class="full-width">
         <span class="buttons pull-left">
-            <input type="reset" value="<?php echo __('Reset'); ?>">
-            <input type="button" name="cancel" class="<?php
-    echo ($ticket && $user) ? 'cancel' : 'close' ?>"  value="<?php echo __('Cancel'); ?>">
+            <!--input type="reset" value="<?php echo __('Reset'); ?>"-->
         </span>
         <span class="buttons pull-right">
             <input type="submit" value="<?php echo __('Update User'); ?>">
+            <input type="button" name="cancel" class="<?php
+            echo ($ticket && $user) ? 'cancel' : 'close' ?>"  value="<?php echo __('Cancel'); ?>">
         </span>
      </p>
 </form>
