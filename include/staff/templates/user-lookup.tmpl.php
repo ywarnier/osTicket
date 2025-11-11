@@ -45,12 +45,12 @@ if ($thisstaff->hasPerm(User::PERM_CREATE)) { ?>
 <?php }
 if ($user) { ?>
     <div><strong id="user-name"><?php echo Format::htmlchars($user->getVar('firstname').' '.$user->getName()->getOriginal()); ?></strong></div>
-    <div>&lt;<span id="user-email"><?php echo $user->getEmail(); ?></span>&gt;</div>
+    <!--div>&lt;<span id="user-email"><?php echo $user->getEmail(); ?></span>&gt;</div-->
     <?php
-    if ($org=$user->getOrganization()) { ?>
+    /* if ($org=$user->getOrganization()) { ?>
     <div><span id="user-org"><?php echo $org->getName(); ?></span></div>
     <?php
-    } ?>
+    }/* ?>
     <table style="margin-top: 1em;">
 <?php foreach ($user->getDynamicData() as $entry) { ?>
     <tr><td colspan="2" style="border-bottom: 1px dotted black"><strong><?php
