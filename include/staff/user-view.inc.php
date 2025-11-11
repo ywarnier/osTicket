@@ -5,12 +5,13 @@ if(!defined('OSTSCPINC') || !$thisstaff || !is_object($user)) die('Invalid path'
 $account = $user->getAccount();
 $org = $user->getOrganization();
 $extras = new ArrayObject();
+$extraData = $user->getExtraData();
 ?>
 <table width="940" cellpadding="2" cellspacing="0" border="0">
     <tr>
         <td width="50%" class="has_bottom_border">
              <h2><a href="users.php?id=<?php echo $user->getId(); ?>"
-             title="Reload"><i class="icon-refresh"></i> <?php echo Format::htmlchars(strtoupper($user->getName()).' '.$user->getExtraData()['firstname']); ?></a></h2>
+             title="Reload"><i class="icon-refresh"></i> <?php echo Format::htmlchars(strtoupper($user->getName()).' '.$extraData['firstname']); ?></a></h2>
         </td>
         <td width="50%" class="right_align has_bottom_border">
 <?php if (($account && $account->isConfirmed())
@@ -101,7 +102,7 @@ if ($thisstaff->hasPerm(User::PERM_EDIT)) { ?>
                 <tr>
                     <th><?php echo 'Numéro d\'usager' ?>:</th>
                     <td>
-                        <span id="user-<?php echo $user->getId(); ?>-clientnum"><?php echo $user->getExtraData()['clientnum']; ?></span>
+                        <span id="user-<?php echo $user->getId(); ?>-clientnum"><?php echo $extraData['clientnum']; ?></span>
                     </td>
                 </tr>
                 <tr>
@@ -124,8 +125,8 @@ if ($thisstaff->hasPerm(User::PERM_EDIT)) { ?>
                     <td><?php echo Format::datetime($user->getCreateDate()); ?></td>
                 </tr>
                 <tr>
-                    <th><?php echo __('Updated'); ?>:</th>
-                    <td><?php echo Format::datetime($user->getUpdateDate()); ?></td>
+                    <th><?php echo 'Recommandé par '; ?>:</th>
+                    <td><?php echo $extraData['recommendedby']; ?></td>
                 </tr>
             </table>
         </td>
