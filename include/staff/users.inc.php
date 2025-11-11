@@ -129,7 +129,7 @@ $users->order_by($order . $order_column);
                 </span>
                 <div id="action-dropdown-more" class="action-dropdown anchor-right">
                     <ul>
-                        <?php if ($thisstaff->hasPerm(User::PERM_EDIT)) { ?>
+                        <?php if ($thisstaff->hasPerm(User::PERM_MANAGE)) { ?>
                         <li><a href="#add-to-org" class="users-action">
                             <i class="icon-group icon-fixed-width"></i>
                             <?php echo __('Add to Organization'); ?></a></li>
