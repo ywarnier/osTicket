@@ -28,12 +28,12 @@ if ($info['error']) {
     } ?>
     <div><b><?php
     echo Format::htmlchars($user->getVar('firstname').' '.$user->getName()->getOriginal()); ?></b></div>
-    <div class="faded">&lt;<?php echo $user->getEmail(); ?>&gt;</div>
+    <!-- div class="faded">&lt;<?php echo $user->getEmail(); ?>&gt;</div-->
     <?php
-    if (($org=$user->getOrganization())) { ?>
+    /* if (($org=$user->getOrganization())) { ?>
     <div style="margin-top: 7px;"><?php echo $org->getName(); ?></div>
     <?php
-    } ?>
+    }*/ ?>
 
 <div class="clear"></div>
 <ul class="tabs" id="user_tabs" style="margin-top:5px">
