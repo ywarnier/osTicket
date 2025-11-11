@@ -105,13 +105,13 @@ $action = $info['action'] ?: ('#tickets/status/'. $state);
         <hr>
         <p class="full-width">
             <span class="buttons pull-left">
-                <input type="reset" value="<?php echo __('Reset'); ?>">
-                <input type="button" name="cancel" class="close"
-                value="<?php echo __('Cancel'); ?>">
+                <!--input type="reset" value="<?php echo __('Reset'); ?>"-->
             </span>
             <span class="buttons pull-right">
-                <input type="submit" value="<?php
-                echo $verb ?: __('Submit'); ?>">
+                <input type="submit"
+                   value="<?php  echo __('Save'); ?>">
+                <input type="button" name="cancel" class="close"
+                   value="<?php echo __('Cancel'); ?>">
             </span>
          </p>
     </form>
