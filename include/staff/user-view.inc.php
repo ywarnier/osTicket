@@ -15,10 +15,10 @@ $extras = new ArrayObject();
         <td width="50%" class="right_align has_bottom_border">
 <?php if (($account && $account->isConfirmed())
     || $thisstaff->hasPerm(User::PERM_EDIT)) { ?>
-            <span class="action-button pull-right" data-dropdown="#action-dropdown-more">
+            <!-- span class="action-button pull-right" data-dropdown="#action-dropdown-more">
                 <i class="icon-caret-down pull-right"></i>
                 <span><i class="icon-cog"></i> <?php echo __('More'); ?></span>
-            </span>
+            </span -->
 <?php }
     if ($thisstaff->hasPerm(User::PERM_DELETE)) { ?>
             <a id="user-delete" class="red button action-button pull-right user-action"
