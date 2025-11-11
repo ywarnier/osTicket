@@ -99,9 +99,9 @@ if ($thisstaff->hasPerm(User::PERM_EDIT)) { ?>
                     </td>
                 </tr>
                 <tr>
-                    <th><?php echo __('Email'); ?>:</th>
+                    <th><?php echo 'Numéro d\'usager' ?>:</th>
                     <td>
-                        <span id="user-<?php echo $user->getId(); ?>-email"><?php echo $user->getEmail(); ?></span>
+                        <span id="user-<?php echo $user->getId(); ?>-clientnum"><?php echo $user->getExtraData()['clientnum']; ?></span>
                     </td>
                 </tr>
                 <tr>
