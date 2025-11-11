@@ -114,6 +114,8 @@ $users->order_by($order . $order_column);
                     <i class="icon-plus-sign"></i>
                     <?php echo __('Add User'); ?>
                 </a>
+                <?php } ?>
+                <?php if ($thisstaff->hasPerm(User::PERM_MANAGE)) { ?>
                 <a class="action-button popup-dialog"
                    href="#users/import">
                     <i class="icon-upload"></i>
