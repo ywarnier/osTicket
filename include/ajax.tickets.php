@@ -1759,12 +1759,7 @@ class TicketsAjaxAPI extends AjaxController {
         $verb = TicketStateField::getVerb($state);
 
         $info['action'] = sprintf('#tickets/%d/status', $ticket->getId());
-        $info['title'] = sprintf(__(
-                    /* 1$ will be a verb, like 'open', 2$ will be the ticket number */
-                    '%1$s Ticket #%2$s'),
-                $verb ?: $state,
-                $ticket->getNumber()
-                );
+        $info['title'] = __('Change Status').' : #'.$ticket->getNumber();
 
         // Deleting?
         if (!strcasecmp($state, 'deleted')) {
