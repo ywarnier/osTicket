@@ -546,7 +546,7 @@ $(function() {
           return {
             results: $.map(data, function (item) {
               return {
-                text: item.email + ' - ' + item.name,
+                text: item.info,
                 slug: item.slug,
                 email: item.email,
                 id: item.id
