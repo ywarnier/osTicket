@@ -35,19 +35,19 @@ require_once INCLUDE_DIR . 'ost-config.php'; // Config file (provides DB constan
 date_default_timezone_set('Europe/Brussels');
 
 // Log key config values for debugging
-log_message("DBNAME: " . DBNAME);
-log_message("TABLE_PREFIX: " . TABLE_PREFIX);
+log_message("DBNAME: " . DBNAME, $logEvents);
+log_message("TABLE_PREFIX: " . TABLE_PREFIX, $logEvents);
 $full_table_name = TABLE_PREFIX . "sms_log";
-log_message("Full table name: " . $full_table_name);
+log_message("Full table name: " . $full_table_name, $logEvents);
 
 // Get the PDO database connection manually
 $dsn = 'mysql:host=' . DBHOST . ';dbname=' . DBNAME . ';charset=utf8';
 try {
     $db = new PDO($dsn, DBUSER, DBPASS);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    log_message("Database connection successful.");
+    log_message("Database connection successful.", $logEvents);
 } catch (PDOException $e) {
-    log_message("Database connection failed: " . $e->getMessage());
+    log_message("Database connection failed: " . $e->getMessage(), $logEvents);
     exit(1); // Exit on connection failure
 }
 
@@ -67,9 +67,9 @@ $create_sql = "
 ";
 try {
     $db->exec($create_sql);
-    log_message("Table creation query executed successfully.");
+    log_message("Table creation query executed successfully.", $logEvents);
 } catch (PDOException $e) {
-    log_message("Table creation failed: " . $e->getMessage() . " (Error Code: " . $e->getCode() . ")");
+    log_message("Table creation failed: " . $e->getMessage() . " (Error Code: " . $e->getCode() . ")", $logEvents);
 }
 
 // Check if the table now exists using information_schema
@@ -87,9 +87,9 @@ try {
     ]);
     $result = $check_stmt->fetch(PDO::FETCH_ASSOC);
     $exists_via_schema = $result['table_exists'] > 0;
-    log_message("Table exists via information_schema: " . ($exists_via_schema ? 'Yes' : 'No'));
+    log_message("Table exists via information_schema: " . ($exists_via_schema ? 'Yes' : 'No'), $logEvents);
 } catch (PDOException $e) {
-    log_message("information_schema check failed: " . $e->getMessage());
+    log_message("information_schema check failed: " . $e->getMessage(), $logEvents);
     $exists_via_schema = false;
 }
 
@@ -111,7 +111,7 @@ $sql = "
     WHERE STR_TO_DATE(LEFT(c.meetdate, 19), '%Y-%m-%d %H:%i:%s') BETWEEN :start AND :end
     AND u.mobilephone IS NOT NULL AND u.mobilephone != ''
 ";
-log_message("Full query: " . $sql . " with param start=" . $tomorrow_hour_start_str);
+log_message("Full query: " . $sql . " with param start=" . $tomorrow_hour_start_str, $logEvents);
 
 try {
     $stmt = $db->prepare($sql);
@@ -119,14 +119,14 @@ try {
     $stmt->bindValue(':end', $tomorrow_hour_end_str);
     $stmt->execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    log_message("Query executed successfully. Found " . count($results) . " results.");
+    log_message("Query executed successfully. Found " . count($results) . " results.", $logEvents);
 } catch (PDOException $e) {
-    log_message("Query failed: " . $e->getMessage());
+    log_message("Query failed: " . $e->getMessage(), $logEvents);
     exit(1);
 }
 
 foreach ($results as $row) {
-    log_message("Sending reminder for ticket: " . $row['ticket_id'] . " with a meeting date of " . $row['meetdate']);
+    log_message("Sending reminder for ticket: " . $row['ticket_id'] . " with a meeting date of " . $row['meetdate'], $logEvents);
     $ticket_id = $row['ticket_id'];
     $user_id = $row['user_id'];
     $phone = $row['mobilephone'];
@@ -194,8 +194,8 @@ foreach ($results as $row) {
             ':message' => $message,
             ':error' => $error
         ]);
-        log_message("Logged SMS for ticket_id $ticket_id: status $status");
+        log_message("Logged SMS for ticket_id $ticket_id: status $status", $logEvents);
     } catch (PDOException $e) {
-        log_message("Logging failed for ticket_id $ticket_id: " . $e->getMessage());
+        log_message("Logging failed for ticket_id $ticket_id: " . $e->getMessage(), $logEvents);
     }
 }
