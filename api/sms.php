@@ -129,55 +129,99 @@ foreach ($results as $row) {
     log_message("Sending reminder for ticket: " . $row['ticket_id'] . " with a meeting date of " . $row['meetdate'], $logEvents);
     $ticket_id = $row['ticket_id'];
     $user_id = $row['user_id'];
-    $phone = $row['mobilephone'];
-    if (substr($phone, 0, 1) == '0') {
-        // Fix for international format, e.g., '+1234567890'
-        $phone = '32'.substr($phone, 1);
-    }
-
+    $raw_phone = trim($row['mobilephone']);
     $meetdate = $row['meetdate'];
     $meetTime = date('H:i', strtotime($meetdate));
     $meetDate = date('d/m/Y', strtotime($meetdate));
 
-    // Construct the message with placeholders (to be replaced in further iterations)
-    $messageFr = "Rappel: Vous avez r-v chez $companyName à $meetTime demain, $meetDate. Si vous devez annuler, merci de contacter $companyName par tél: $companyPhone";
-    $messageNl = "Herinnering: Je hebt een afspraak bij $companyName om $meetTime morgen, $meetDate. Als je moet annuleren, contacteer dan $companyName per telefoon: $companyPhone";
-
-    if (substr($row['lang'], 0 ,2) != '25') {
-        $message = $messageFr;
+    // Process phone number
+    if (empty($raw_phone)) {
+        $status = 'failed';
+        $error = 'Empty phone number';
+        $phone = '';
+        $message = ''; // No message since not sending
     } else {
-        $message = $messageNl;
+        // Take only the first phone number if multiple
+        $pos = false;
+        $pos_paren = strpos($raw_phone, '(');
+        $pos_slash = strpos($raw_phone, '/');
+        if ($pos_paren !== false) $pos = $pos_paren;
+        if ($pos_slash !== false && ($pos === false || $pos_slash < $pos)) $pos = $pos_slash;
+        if ($pos !== false) {
+            $raw_phone = trim(substr($raw_phone, 0, $pos));
+        }
+
+        // Clean non-digits except leading +
+        $cleaned = preg_replace('/[^0-9+]/', '', $raw_phone);
+
+        if (strlen($cleaned) < 9 || !preg_match('/^(\+?\d+|\d+)$/', $cleaned)) {
+            $status = 'failed';
+            $error = 'Invalid phone number format: ' . $raw_phone;
+            $phone = '';
+            $message = '';
+        } else {
+            if (substr($cleaned, 0, 1) === '+') {
+                $international = substr($cleaned, 1);
+            } elseif (substr($cleaned, 0, 1) === '0') {
+                $international = '32' . substr($cleaned, 1);
+            } else {
+                if (ctype_digit($cleaned)) {
+                    $international = '32' . $cleaned;
+                } else {
+                    $international = '';
+                }
+            }
+
+            if (!ctype_digit($international) || strlen($international) < 10 || strlen($international) > 15) {
+                $status = 'failed';
+                $error = 'Invalid phone number format: ' . $raw_phone;
+                $phone = '';
+                $message = '';
+            } else {
+                $phone = $international;
+
+                // Construct the message with placeholders (to be replaced in further iterations)
+                $messageFr = "Rappel: Vous avez r-v chez $companyName à $meetTime demain, $meetDate. Si vous devez annuler, merci de contacter $companyName par tél: $companyPhone";
+                $messageNl = "Herinnering: Je hebt een afspraak bij $companyName om $meetTime morgen, $meetDate. Als je moet annuleren, contacteer dan $companyName per telefoon: $companyPhone";
+
+                if (substr($row['lang'], 0 ,2) != '25') {
+                    $message = $messageFr;
+                } else {
+                    $message = $messageNl;
+                }
+
+                // SMS API configuration (smsgatewayapi.com)
+                $url = "https://api.smsgatewayapi.com/v1/message/send";
+                $client_id = $smsUser; // Your API client ID (required)
+                $client_secret = $smsPassword; // Your API client secret (required)
+                $data = [
+                    'message' => $message, //Message (required)
+                    'to' => $phone, //Receiver (required)
+                    'sender' => substr($companyPhone, 1) //Sender (required)
+                ];
+
+                // Prepare curl request
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_VERBOSE, true);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    "X-Client-Id: $client_id",
+                    "X-Client-Secret: $client_secret",
+                    "Content-Type: application/json",
+                ]);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+                $response = curl_exec($ch);
+                $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+
+                // Determine status (basic check; adjust based on API response format if needed)
+                $status = ($http_code == 200) ? 'sent' : 'failed';
+                $error = ($status == 'failed') ? $response : null;
+            }
+        }
     }
-
-    // SMS API configuration (smsgatewayapi.com)
-    $url = "https://api.smsgatewayapi.com/v1/message/send";
-    $client_id = $smsUser; // Your API client ID (required)
-    $client_secret = $smsPassword; // Your API client secret (required)
-    $data = [
-        'message' => $message, //Message (required)
-        'to' => $phone, //Receiver (required)
-        'sender' => substr($companyPhone, 1) //Sender (required)
-    ];
-
-    // Prepare curl request
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_VERBOSE, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        "X-Client-Id: $client_id",
-        "X-Client-Secret: $client_secret",
-        "Content-Type: application/json",
-    ]);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-    $response = curl_exec($ch);
-    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-
-    // Determine status (basic check; adjust based on API response format if needed)
-    $status = ($http_code == 200) ? 'sent' : 'failed';
-    $error = ($status == 'failed') ? $response : null;
 
     // Log the result to the database
     $log_sql = "
