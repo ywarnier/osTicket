@@ -167,10 +167,21 @@ foreach ($results as $row) {
             $phone = '';
             $message = '';
         } else {
+            /**Phone number types:
+             * +32487123456 -> remove +
+             * 0032487123456 -> remove leading 00
+             * 0487123456 -> remove leading 0 and add 32
+             * 32487123456 -> perfect, do nothing
+             * other cases
+             */
             if (substr($cleaned, 0, 1) === '+') {
                 $international = substr($cleaned, 1);
+            } elseif (substr($cleaned, 0, 2) === '00') {
+                $international = substr($cleaned, 2);
             } elseif (substr($cleaned, 0, 1) === '0') {
                 $international = '32' . substr($cleaned, 1);
+            } elseif (substr($cleaned, 0, 2) === '32') {
+                $international = $cleaned;
             } else {
                 if (ctype_digit($cleaned)) {
                     $international = '32' . $cleaned;
