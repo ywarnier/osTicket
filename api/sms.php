@@ -16,6 +16,9 @@ define('LOG_FILE', __DIR__ . '/sms_cron.log'); // Log file for debugging
 
 $logEvents = false;
 
+$templateMessageFr = "Rappel Rendez-vous %s le %s à %s. Pour annuler %s";
+$templateMessageNl = "Herinnering: Afspraak bij %s het %s tot %s. Annuleren: %s";
+
 // Function to log messages to file (no stdout)
 function log_message($msg, $logEvents = false) {
     if (!$logEvents) return;
@@ -87,7 +90,7 @@ try {
     ]);
     $result = $check_stmt->fetch(PDO::FETCH_ASSOC);
     $exists_via_schema = $result['table_exists'] > 0;
-    log_message("Table exists via information_schema: " . ($exists_via_schema ? 'Yes' : 'No'), $logEvents);
+    //log_message("Table exists via information_schema: " . ($exists_via_schema ? 'Yes' : 'No'), $logEvents);
 } catch (PDOException $e) {
     log_message("information_schema check failed: " . $e->getMessage(), $logEvents);
     $exists_via_schema = false;
@@ -111,7 +114,6 @@ $sql = "
     WHERE STR_TO_DATE(LEFT(c.meetdate, 19), '%Y-%m-%d %H:%i:%s') BETWEEN :start AND :end
     AND u.mobilephone IS NOT NULL AND u.mobilephone != ''
 ";
-log_message("Full query: " . $sql . " with param start=" . $tomorrow_hour_start_str, $logEvents);
 
 try {
     $stmt = $db->prepare($sql);
@@ -119,8 +121,13 @@ try {
     $stmt->bindValue(':end', $tomorrow_hour_end_str);
     $stmt->execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    log_message("Query executed successfully. Found " . count($results) . " results.", $logEvents);
+    if (count($results) > 0) {
+        log_message("Query executed successfully. Found " . count($results) . " results.", $logEvents);
+    } else {
+        // do nothing
+    }
 } catch (PDOException $e) {
+    log_message("Full query: " . $sql . " with param :start=" . $tomorrow_hour_start_str.", :end=" . $tomorrow_hour_end_str, $logEvents);
     log_message("Query failed: " . $e->getMessage(), $logEvents);
     exit(1);
 }
@@ -181,8 +188,8 @@ foreach ($results as $row) {
                 $phone = $international;
 
                 // Construct the message with placeholders (to be replaced in further iterations)
-                $messageFr = "Rappel: Vous avez r-v chez $companyName à $meetTime demain, $meetDate. Si vous devez annuler, merci de contacter $companyName par tél: $companyPhone";
-                $messageNl = "Herinnering: Je hebt een afspraak bij $companyName om $meetTime morgen, $meetDate. Als je moet annuleren, contacteer dan $companyName per telefoon: $companyPhone";
+                $messageFr = sprintf($templateMessageFr, $companyName, $meetDate, $meetTime, $companyPhone);
+                $messageNl = sprintf($templateMessageNl, $companyName, $meetDate, $meetTime, $companyPhone);
 
                 if (substr($row['lang'], 0 ,2) != '25') {
                     $message = $messageFr;
