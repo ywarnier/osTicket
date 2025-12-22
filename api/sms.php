@@ -12,7 +12,7 @@ if (php_sapi_name() !== 'cli') {
 // Define paths (script is in the api/ folder)
 define('ROOT_DIR', dirname(__FILE__) . '/../');
 define('INCLUDE_DIR', ROOT_DIR . 'include/');
-define('LOG_FILE', __DIR__ . '/../../sms_cron.log'); // Log file for debugging
+define('LOG_FILE', __DIR__ . '/../../log/sms_cron.log'); // Log file for debugging
 
 $logEvents = true;
 
