@@ -12,9 +12,9 @@ if (php_sapi_name() !== 'cli') {
 // Define paths (script is in the api/ folder)
 define('ROOT_DIR', dirname(__FILE__) . '/../');
 define('INCLUDE_DIR', ROOT_DIR . 'include/');
-define('LOG_FILE', __DIR__ . '/sms_cron.log'); // Log file for debugging
+define('LOG_FILE', __DIR__ . '/../../sms_cron.log'); // Log file for debugging
 
-$logEvents = false;
+$logEvents = true;
 
 $templateMessageFr = "Rappel Rendez-vous %s le %s à %s. Pour annuler %s";
 $templateMessageNl = "Herinnering: Afspraak bij %s het %s tot %s. Annuleren: %s";
@@ -104,14 +104,14 @@ $tomorrow_hour_start_str = date('Y-m-d H:00:00', $now + 86400);
 $tomorrow_hour_end_str = date('Y-m-d H:59:59', $now + 86400);
 
 // Query for tickets with meetings in the specified range
-// Assuming 'meetdate' is a DATETIME column in ost_ticket__cdata
+// Assuming 'DatedeRendezVous' is a DATETIME column in ost_ticket__cdata
 // Assuming user phone is stored in a custom field 'mobilephone' in ost_user__cdata
 $sql = "
-    SELECT t.ticket_id, t.user_id, c.meetdate, u.mobilephone, u.lang
+    SELECT t.ticket_id, t.user_id, c.DatedeRendezVous, u.mobilephone, u.lang
     FROM " . TABLE_PREFIX . "ticket t
     INNER JOIN " . TABLE_PREFIX . "ticket__cdata c ON t.ticket_id = c.ticket_id
     INNER JOIN " . TABLE_PREFIX . "user__cdata u ON t.user_id = u.user_id
-    WHERE STR_TO_DATE(LEFT(c.meetdate, 19), '%Y-%m-%d %H:%i:%s') BETWEEN :start AND :end
+    WHERE STR_TO_DATE(LEFT(c.DatedeRendezVous, 19), '%Y-%m-%d %H:%i:%s') BETWEEN :start AND :end
     AND u.mobilephone IS NOT NULL AND u.mobilephone != ''
 ";
 
