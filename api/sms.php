@@ -28,6 +28,7 @@ function log_message($msg, $logEvents = false) {
 // Define empty settings redefined in ost-config.php
 $companyName = '';
 $companyPhone = '';
+$companyPhoneSender = '';
 $smsUser = '';
 $smsPassword = '';
 
@@ -107,7 +108,7 @@ $tomorrow_hour_end_str = date('Y-m-d H:59:59', $now + 86400);
 // Assuming 'DatedeRendezVous' is a DATETIME column in ost_ticket__cdata
 // Assuming user phone is stored in a custom field 'mobilephone' in ost_user__cdata
 $sql = "
-    SELECT t.ticket_id, t.user_id, c.DatedeRendezVous, u.mobilephone, u.lang
+    SELECT t.ticket_id, t.user_id, c.DatedeRendezVous as meetdate, u.mobilephone, u.lang
     FROM " . TABLE_PREFIX . "ticket t
     INNER JOIN " . TABLE_PREFIX . "ticket__cdata c ON t.ticket_id = c.ticket_id
     INNER JOIN " . TABLE_PREFIX . "user__cdata u ON t.user_id = u.user_id
@@ -215,7 +216,7 @@ foreach ($results as $row) {
                 $data = [
                     'message' => $message, //Message (required)
                     'to' => $phone, //Receiver (required)
-                    'sender' => substr($companyPhone, 1) //Sender (required)
+                    'sender' => $companyPhoneSender, //Sender (required)
                 ];
 
                 // Prepare curl request
