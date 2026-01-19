@@ -15,6 +15,7 @@ define('INCLUDE_DIR', ROOT_DIR . 'include/');
 define('LOG_FILE', __DIR__ . '/../../log/sms_cron.log'); // Log file for debugging
 
 $logEvents = true;
+$timezone = 'Europe/Brussels'; //time generated below is application user's time
 
 $templateMessageFr = "Rappel Rendez-vous %s le %s à %s. Pour annuler %s";
 $templateMessageNl = "Herinnering: Afspraak bij %s het %s tot %s. Annuleren: %s";
@@ -36,7 +37,7 @@ $smsPassword = '';
 require_once INCLUDE_DIR . 'ost-config.php'; // Config file (provides DB constants and TABLE_PREFIX)
 
 // Set default timezone to handle CEST/CET with DST
-date_default_timezone_set('Europe/Brussels');
+date_default_timezone_set($timezone);
 
 // Log key config values for debugging
 log_message("DBNAME: " . DBNAME, $logEvents);
@@ -62,7 +63,7 @@ $create_sql = "
         `ticket_id` INT UNSIGNED NOT NULL,
         `user_id` INT UNSIGNED NOT NULL,
         `phone` VARCHAR(64) NOT NULL,
-        `sent_at` DATETIME NOT NULL,
+        `sent_at` DATETIME NOT NULL, -- in Brussels time
         `status` VARCHAR(32) NOT NULL,
         `message` TEXT,
         `error` TEXT,
@@ -98,7 +99,6 @@ try {
 }
 
 // Calculate the time range for meetings: next day's current hour (00 to 59:59)
-date_default_timezone_set('UTC');
 $now = time();
 $now_time = date('Y-m-d H:i:s', $now);
 $tomorrow_hour_start_str = date('Y-m-d H:00:00', $now + 86400);
@@ -108,7 +108,7 @@ $tomorrow_hour_end_str = date('Y-m-d H:59:59', $now + 86400);
 // Assuming 'DatedeRendezVous' is a DATETIME column in ost_ticket__cdata
 // Assuming user phone is stored in a custom field 'mobilephone' in ost_user__cdata
 $sql = "
-    SELECT t.ticket_id, t.user_id, c.DatedeRendezVous as meetdate, u.mobilephone, u.lang
+    SELECT t.ticket_id, t.number, t.user_id, c.DatedeRendezVous as meetdate, u.mobilephone, u.lang
     FROM " . TABLE_PREFIX . "ticket t
     INNER JOIN " . TABLE_PREFIX . "ticket__cdata c ON t.ticket_id = c.ticket_id
     INNER JOIN " . TABLE_PREFIX . "user__cdata u ON t.user_id = u.user_id
@@ -136,6 +136,7 @@ try {
 foreach ($results as $row) {
     log_message("Sending reminder for ticket: " . $row['ticket_id'] . " with a meeting date of " . $row['meetdate'], $logEvents);
     $ticket_id = $row['ticket_id'];
+    $internal_ticket_id = $row['number'];
     $user_id = $row['user_id'];
     $raw_phone = trim($row['mobilephone']);
     $meetdate = $row['meetdate'];
@@ -231,6 +232,9 @@ foreach ($results as $row) {
                     "Content-Type: application/json",
                 ]);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+                //die(var_dump($data, true));
+                //echo $internal_ticket_id.'('.$ticket_id.')# '.$message.PHP_EOL;
+
                 $response = curl_exec($ch);
                 $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                 curl_close($ch);
