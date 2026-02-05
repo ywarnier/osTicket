@@ -731,7 +731,7 @@ implements TemplateVariable, Searchable {
     function getNewClientNum(): string
     {
         $newClientNum = '00000000';
-        $sql = "SELECT clientnum FROM ".USER_CDATA_TABLE." WHERE clientnum IS NOT NULL AND clientnum != '' ORDER BY clientnum DESC LIMIT 1;";
+        $sql = "SELECT clientnum FROM ".USER_CDATA_TABLE." WHERE clientnum IS NOT NULL AND clientnum != '' ORDER BY clientnum + 0 DESC LIMIT 1;";
         // Execute the query
         $res = db_query($sql, true);
         // Fetch and return the maximum value found
