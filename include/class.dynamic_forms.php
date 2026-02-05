@@ -1399,6 +1399,7 @@ class DynamicFormEntry extends VerySimpleModel {
                 case 'clientnum':
                     $user = new User();
                     $field->ht['hint'] = $user->getNewClientNum();
+                    $field->ht['configuration']['disabled'] = true;
                     break;
                 case 'email':
                     $user = new User();
