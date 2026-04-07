@@ -5081,12 +5081,27 @@ class DatetimePickerWidget extends Widget {
         global $cfg;
 
         if ($value = parent::getValue()) {
-            if (($dt = Format::parseDateTime($value))) {
-                // Effective timezone for the selection
-                if (($timezone = $this->field->getTimezone()))
-                    $dt->setTimezone($timezone);
-                // Format date time to universal format
+            $timezone = $this->field->getTimezone()
+                ?: new DateTimeZone('UTC');
+            // Parse the submitted value directly in the field's timezone.
+            // Using Format::parseDateTime() would call new DateTime($value)
+            // without an explicit timezone, causing PHP to treat the naive
+            // string as UTC (bootstrap.php always sets the server to UTC).
+            // The subsequent setTimezone() would then add the Brussels offset
+            // a second time, storing times 1 h (CET) or 2 h (CEST) too late.
+            // Passing $timezone to new DateTime() makes PHP interpret the
+            // naive string as local Brussels time from the start; if the
+            // string already carries an explicit abbreviation (e.g. "CEST"),
+            // PHP honours that and ignores the $timezone argument.
+            try {
+                $dt = new DateTime($value, $timezone);
+                $dt->setTimezone($timezone);
                 $value = $dt->format('Y-m-d H:i:s T');
+            } catch (Exception $e) {
+                if (($dt = Format::parseDateTime($value))) {
+                    $dt->setTimezone($timezone);
+                    $value = $dt->format('Y-m-d H:i:s T');
+                }
             }
         }
 
