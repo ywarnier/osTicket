@@ -1397,17 +1397,72 @@ class DynamicFormEntry extends VerySimpleModel {
         foreach ($inst->getDynamicFields() as $field) {
             switch ($field->ht['name']) {
                 case 'clientnum':
-                    $user = new User();
-                    $field->ht['hint'] = $user->getNewClientNum();
+                    global $thisstaff;
+
+                    // Ensure session is active so we can reliably get a session ID for reservations
+                    if (session_status() === PHP_SESSION_NONE) {
+                        session_start();
+                    }
+
+                    if ($thisstaff && session_id()) {
+                        require_once INCLUDE_DIR . 'class.clientnum.php';
+                        $nextNum = ClientnumReservation::getOrReserve(
+                            $thisstaff->getId(), session_id()
+                        );
+                    } else {
+                        $user = new User();
+                        $nextNum = $user->getNewClientNum();
+                    }
+
+                    $field->ht['hint'] = $nextNum;
                     $field->ht['configuration']['disabled'] = true;
-                    break;
+
+                    // Set a proper default value on the answer
+                    $a = new DynamicFormEntryAnswer(
+                        array('field' => $field, 'entry' => $inst)
+                    );
+                    $a->set('value', $nextNum);
+                    $a->field->setAnswer($a);
+                    $inst->answers->add($a);
+
+                    // Marker for reliable JS targeting on dynamic reveals
+                    if (!isset($field->ht['attributes']) || !is_array($field->ht['attributes'])) {
+                        $field->ht['attributes'] = [];
+                    }
+                    $field->ht['attributes']['data-clientnum-field'] = 'true';
+
+                    $skipAnswerCreation = true;
+                    break;  // the check after the switch will skip normal answer creation
                 case 'email':
-                    $user = new User();
-                    $field->ht['hint'] = $user->getNewClientNum().'@example.com';
+                    // IMPORTANT: Use the SAME $nextNum that was computed for clientnum
+                    if (!isset($nextNum)) {
+                        global $thisstaff;
+                        if ($thisstaff && session_id()) {
+                            require_once INCLUDE_DIR . 'class.clientnum.php';
+                            $nextNum = ClientnumReservation::getOrReserve(
+                                $thisstaff->getId(), session_id()
+                            );
+                        } else {
+                            $user = new User();
+                            $nextNum = $user->getNewClientNum();
+                        }
+                    }
+                    $field->ht['hint'] = $nextNum . '@example.com';
+
+                    // Marker for the email field (used by JS to keep it in sync with clientnum)
+                    if (!isset($field->ht['attributes']) || !is_array($field->ht['attributes'])) {
+                        $field->ht['attributes'] = [];
+                    }
+                    $field->ht['attributes']['data-clientnum-derived-email'] = 'true';
                     break;
                 default:
                     break;
             }
+            if (isset($skipAnswerCreation) && $skipAnswerCreation) {
+                $skipAnswerCreation = false;
+                continue;
+            }
+
             if (!($impl = $field->getImpl($field)))
                 continue;
             if (!$impl->hasData() || !$impl->isStorable())

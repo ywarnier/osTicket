@@ -306,8 +306,15 @@ class UsersAjaxAPI extends AjaxController {
             $form = UserForm::getUserForm()->getForm($_POST);
             if (!is_string($form->getField('name')->getValue()))
                 Http::response(404, 'Invalid Data');
-            if (($user = User::fromForm($form)))
+            if (($user = User::fromForm($form))) {
+                // Release any reservation we had for this clientnum
+                $cdata = $user->getExtraData();
+                if (!empty($cdata['clientnum'])) {
+                    require_once INCLUDE_DIR . 'class.clientnum.php';
+                    ClientnumReservation::release($cdata['clientnum']);
+                }
                 Http::response(201, $user->to_json(), 'application/json');
+            }
 
             $info['error'] = sprintf('%s - %s', __('Error adding user'), __('Please try again!'));
         }
@@ -545,6 +552,29 @@ class UsersAjaxAPI extends AjaxController {
         $info = array('action' => "#users/$id/tickets/export");
 
         include STAFFINC_DIR . 'templates/queue-export.tmpl.php';
+    }
+
+    /**
+     * Returns the next available clientnum.
+     * Used by the staff UI to force a fresh value when revealing the
+     * "create new user" form after the user has selected an existing one.
+     */
+    function getNextClientNum() {
+        global $thisstaff;
+
+        if (!$thisstaff) {
+            Http::response(403, 'Login Required');
+        }
+
+        // Make sure the session is started so session_id() is reliable
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        require_once INCLUDE_DIR . 'class.clientnum.php';
+        $num = ClientnumReservation::getOrReserve($thisstaff->getId(), session_id());
+
+        Http::response(200, JsonDataEncoder::encode(['clientnum' => $num]), 'application/json');
     }
 }
 ?>

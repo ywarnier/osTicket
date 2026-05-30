@@ -136,7 +136,84 @@ $(function() {
         e.preventDefault();
         $("#msg_error, #msg_notice, #msg_warning").fadeOut();
         $('div#selected-user-info').hide();
-        $('div#new-user-form').fadeIn({start: function(){ $('#user-search').focus(); }});
+
+        var $newForm = $('div#new-user-form');
+
+        // Fetch a fresh clientnum as early as possible
+        var promise = $.getJSON('ajax.php/users/next-clientnum');
+
+        $newForm.fadeIn({
+            start: function() { $('#user-search').focus(); },
+            complete: function() {
+                promise.done(function(data) {
+                    if (!data || !data.clientnum) return;
+
+                    var num = data.clientnum;
+
+                    // Prefer the properly marked field
+                    var $field = $newForm.find('input[data-clientnum-field="true"]').first();
+
+                    if (!$field.length) {
+                        // Fallback for older renders: first disabled input that looks numeric/empty
+                        $field = $newForm.find('input[disabled]').filter(function() {
+                            var v = $(this).val() || '';
+                            return v === '' || /^\d{5,}$/.test(v);
+                        }).first();
+                    }
+
+                    if ($field.length) {
+                        $field.val(num);
+                        // Set disabled synchronously, right next to the value
+                        $field.prop('disabled', true);
+                        $field.attr('disabled', 'disabled');
+                        if ($field[0]) {
+                            $field[0].disabled = true;
+                        }
+                        console.log('[gazelc clientnum] Filled + disabled synchronously', $field[0]);
+
+                        // Also keep the derived fake email (@example.com) in sync with the new clientnum
+                        var $emailField = $newForm.find('input[data-clientnum-derived-email="true"]').first();
+                        if ($emailField.length) {
+                            $emailField.val(num + '@example.com');
+                            console.log('[gazelc clientnum] Updated derived email field synchronously');
+                        } else {
+                            // Fallback: find any input that currently holds a clientnum-based fake email
+                            $newForm.find('input').each(function() {
+                                var $inp = $(this);
+                                if (($inp.val() || '').match(/^\d{5,}@example\.com$/)) {
+                                    $inp.val(num + '@example.com');
+                                    console.log('[gazelc clientnum] Updated derived email via fallback');
+                                }
+                            });
+                        }
+                    } else {
+                        // Stronger fallback for clientnum
+                        $newForm.find('input').each(function() {
+                            var $inp = $(this);
+                            var name = ($inp.attr('name') || '').toLowerCase();
+                            var id   = ($inp.attr('id') || '').toLowerCase();
+                            var currentVal = $inp.val() || '';
+
+                            if ($inp.prop('disabled') ||
+                                name.indexOf('clientnum') > -1 ||
+                                id.indexOf('clientnum') > -1 ||
+                                /^\d{5,}$/.test(currentVal)) {
+
+                                $inp.val(num);
+                                $inp.prop('disabled', true);
+                                $inp.attr('disabled', 'disabled');
+                                if ($inp[0]) $inp[0].disabled = true;
+                                console.log('[gazelc clientnum] Filled + disabled via fallback', $inp[0]);
+                                $field = $inp;
+                            }
+                        });
+                    }
+
+                    // Do not rely on the global enforcer for the reveal path — it can introduce delay via the observer.
+                });
+            }
+        });
+
         return false;
      });
 

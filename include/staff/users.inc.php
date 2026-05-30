@@ -10,15 +10,72 @@ $users = User::objects()
 
 if ($_REQUEST['query']) {
     $search = $_REQUEST['query'];
-    $filter = Q::any(array(
-        'emails__address__contains' => $search,
-        'name__contains' => $search,
-        'org__name__contains' => $search,
-    ));
-    if (UserForm::getInstance()->getField('phone'))
-        $filter->add(array('cdata__phone__contains' => $search));
-
-    $users->filter($filter);
+    
+    // Split query to handle "firstname lastname" searches
+    $queryParts = preg_split('/\s+/', trim($search), 2);
+    
+    if (count($queryParts) === 2) {
+        // Two-part search: try "firstname lastname" and "lastname firstname"
+        $part1 = $queryParts[0];
+        $part2 = $queryParts[1];
+        
+        // Build filter for two-part search
+        $filter = Q::any(array(
+            // Email contains full query
+            'emails__address__contains' => $search,
+            // Organization name contains full query
+            'org__name__contains' => $search,
+            // Name contains either part
+            'name__contains' => $part1,
+            'name__contains' => $part2,
+        ));
+        
+        // Add firstname search combinations if field exists
+        if (UserForm::getInstance()->getField('firstname')) {
+            // Try part1 in name AND part2 in firstname
+            $filter->add(Q::all(array(
+                'name__contains' => $part1,
+                'cdata__firstname__contains' => $part2
+            )));
+            
+            // Try part2 in name AND part1 in firstname
+            $filter->add(Q::all(array(
+                'name__contains' => $part2,
+                'cdata__firstname__contains' => $part1
+            )));
+            
+            // Try firstname contains either part
+            $filter->add(array('cdata__firstname__contains' => $part1));
+            $filter->add(array('cdata__firstname__contains' => $part2));
+        }
+        
+        // Add phone search if field exists
+        if (UserForm::getInstance()->getField('phone')) {
+            $filter->add(array('cdata__phone__contains' => $search));
+        }
+        
+        $users->filter($filter);
+    } else {
+        // Single-word search
+        $filter = Q::any(array(
+            'emails__address__contains' => $search,
+            'name__contains' => $search,
+            'org__name__contains' => $search,
+        ));
+        
+        // Add firstname search if field exists
+        if (UserForm::getInstance()->getField('firstname')) {
+            $filter->add(array('cdata__firstname__contains' => $search));
+        }
+        
+        // Add phone search if field exists
+        if (UserForm::getInstance()->getField('phone')) {
+            $filter->add(array('cdata__phone__contains' => $search));
+        }
+        
+        $users->filter($filter);
+    }
+    
     $qs += array('query' => $_REQUEST['query']);
 }
 

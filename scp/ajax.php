@@ -129,7 +129,8 @@ $dispatcher = patterns('',
         url_post('^/(?P<id>\d+)/note$', 'createNote'),
         url_get('^/(?P<id>\d+)/forms/manage$', 'manageForms'),
         url_post('^/(?P<id>\d+)/forms/manage$', 'updateForms'),
-        url('^/(?P<id>\d+)/tickets/export$', 'exportTickets')
+        url('^/(?P<id>\d+)/tickets/export$', 'exportTickets'),
+        url_get('^/next-clientnum$', 'getNextClientNum')
     )),
     url('^/orgs', patterns('ajax.orgs.php:OrgsAjaxAPI',
         url_get('^$', 'search'),

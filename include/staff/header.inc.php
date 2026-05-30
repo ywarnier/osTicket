@@ -64,7 +64,7 @@ if (osTicket::is_ie())
       // with the contents of the "hint" attribute to this field.
       // This only exists because OSTicket makes it very impractical to simply load a default value into a field.
       document.addEventListener("DOMContentLoaded", function() {
-        function copyEmToInput() {
+        window.copyEmToInput = function copyEmToInput() {
           // Select only <em> elements with the data-copy-to-input attribute inside the popup
           var emElements = document.querySelectorAll('#popup em[data-copy-to-input="true"]');
 
@@ -83,18 +83,42 @@ if (osTicket::is_ie())
           });
         }
 
+        // Enforce that the clientnum field is disabled once it has a value.
+        // This makes it harder for staff to accidentally (or easily) tamper with the prefilled number.
+        window.enforceClientnumDisabled = function enforceClientnumDisabled() {
+          var acted = false;
+          document.querySelectorAll('#popup input[data-clientnum-field="true"]').forEach(function(input) {
+            if (input.value) {
+              input.disabled = true;
+              // Ensure the attribute is present in the DOM (helps with some rendering paths)
+              if (!input.hasAttribute('disabled')) {
+                input.setAttribute('disabled', 'disabled');
+              }
+              acted = true;
+            }
+          });
+          if (acted) {
+            console.log('[gazelc clientnum] enforceClientnumDisabled acted on one or more fields');
+          }
+        }
+
         // Observer to detect changes in the popup content
         const observer = new MutationObserver(mutations => {
           for (let mutation of mutations) {
             if (mutation.type === 'childList' || mutation.type === 'subtree') {
-              copyEmToInput(); // Run the function when new nodes are added
+              copyEmToInput();
+              enforceClientnumDisabled();
             }
           }
         });
 
         // Define what to observe (childList changes) and start observing the popup element
         const popup = document.getElementById('popup');
-        observer.observe(popup, { childList: true, subtree: true });
+        if (popup) {
+          observer.observe(popup, { childList: true, subtree: true });
+          // Initial run in case content is already present
+          enforceClientnumDisabled();
+        }
       });
     </script>
 </head>

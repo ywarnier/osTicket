@@ -4463,6 +4463,16 @@ class TextboxWidget extends Widget {
         $attrs['placeholder'] = sprintf('"%s"',
                 Format::htmlchars($this->field->getLocal('placeholder',
                     $config['placeholder'])));
+
+        // Support extra attributes set on the DynamicFormField (e.g. data-clientnum-field)
+        if (isset($this->field->ht['attributes']) && is_array($this->field->ht['attributes'])) {
+            foreach ($this->field->ht['attributes'] as $k => $v) {
+                if (!isset($attrs[$k])) {
+                    $attrs[$k] = '"'.htmlspecialchars($v, ENT_QUOTES).'"';
+                }
+            }
+        }
+
         $type = static::$input_type;
         $types = array(
             'email' => 'email',

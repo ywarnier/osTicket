@@ -92,6 +92,13 @@ Once you have a Crowdin account, login and translate the software in your browse
 
 Localizing strings in new code requires usage of a [few rules](setup/doc/i18n.md).
 
+Gazelec-specific notes
+----------------------
+
+This fork includes a filesystem-based client number reservation system under `include/tmp/clientnum-reservations/`. The directory (and its contents) must remain writable by the web server user. Reservation files are runtime-only and ignored by git.
+
+Reservations expire after 10 minutes of inactivity. This timeout can be adjusted in `include/class.clientnum.php` (constant `EXPIRATION`).
+
 License
 -------
 osTicket is released under the GPL2 license. See the included LICENSE.txt

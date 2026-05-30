@@ -1,0 +1,6 @@
+# Clientnum reservations are runtime-only data.
+# We never want to commit actual reservation files.
+*
+
+# But keep the .gitignore itself so the directory structure is preserved in git.
+!.gitignore
