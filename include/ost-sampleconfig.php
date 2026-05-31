@@ -194,3 +194,15 @@ define('SESSION_SESSID', 'OSTSESSID');
 #         term that should work for most of your agents.
 #
 define('USERS_COLUMNS', 'cdata__firstname|First Name:cdata__clientnum|Num usager:cdata__postcode|Code postal:cdata__mobilephone|Mobile Number:cdata__landphone|Phone Number:cdata__email2|Email');
+
+# ======================================================================
+# Gazelec-specific customizations (not part of upstream osTicket)
+# ======================================================================
+
+# Control the padlock protection for the "Num usager" (clientnum) field.
+# See GROK.md and the clientnum-reservations system for details.
+# define('CLIENTNUM_PADLOCK_ENABLED', true);
+
+# Expiration time in seconds for clientnum reservations (to avoid duplicates
+# when multiple staff create users concurrently).
+# define('CLIENTNUM_RESERVATION_EXPIRATION', 600);

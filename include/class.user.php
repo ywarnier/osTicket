@@ -538,7 +538,19 @@ implements TemplateVariable, Searchable {
     }
 
     function updateInfo($vars, &$errors, $staff=false) {
-        $isEditable = function ($f) use($staff) {
+        // Gazelec customization: Use the constant from ost-config.php.
+        // If not defined, default to true (safer).
+        if (!defined('CLIENTNUM_PADLOCK_ENABLED')) {
+            define('CLIENTNUM_PADLOCK_ENABLED', true);
+        }
+
+        $isEditable = function ($f) use($staff, $vars) {
+            if ($staff && $f->get('name') === 'clientnum' && CLIENTNUM_PADLOCK_ENABLED) {
+                // Only allow editing clientnum if the admin explicitly unlocked it via padlock
+                if (empty($vars['clientnum_unlock'])) {
+                    return false;
+                }
+            }
             return ($staff ? $f->isEditableToStaff() :
                     $f->isEditableToUsers());
         };

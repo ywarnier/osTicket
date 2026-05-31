@@ -87,7 +87,8 @@ if (osTicket::is_ie())
         // This makes it harder for staff to accidentally (or easily) tamper with the prefilled number.
         window.enforceClientnumDisabled = function enforceClientnumDisabled() {
           var acted = false;
-          document.querySelectorAll('#popup input[data-clientnum-field="true"]').forEach(function(input) {
+          // Only enforce on fields that have not been explicitly unlocked via the padlock in this edit session.
+          document.querySelectorAll('#popup input[data-clientnum-field="true"]:not([data-clientnum-unlocked])').forEach(function(input) {
             if (input.value) {
               input.disabled = true;
               // Ensure the attribute is present in the DOM (helps with some rendering paths)
@@ -102,12 +103,58 @@ if (osTicket::is_ie())
           }
         }
 
+        // Wire up Gazelec clientnum padlock (click-to-unlock) icons.
+        // We centralize this here (instead of inline <script> after the span) because
+        // document.currentScript and inline script execution are unreliable when HTML
+        // is injected via jQuery .load() / AJAX into the #popup dialog (the "edit user"
+        // modal opened from ticket details, the main users list, etc.).
+        // The existing MutationObserver below will pick up dynamically added padlocks.
+        window.attachClientnumPadlocks = function attachClientnumPadlocks(root) {
+          root = root || document;
+          root.querySelectorAll('span.clientnum-padlock[data-clientnum-padlock="1"]').forEach(function(lock) {
+            if (lock.dataset.attached === '1') return; // prevent double binding on re-observations
+            lock.dataset.attached = '1';
+
+            lock.addEventListener('click', function() {
+              // Prefer the explicitly marked clientnum input (set during render), fall back to any input in the same wrapper
+              var input = lock.parentNode.querySelector('input[data-clientnum-field="true"]')
+                       || lock.parentNode.querySelector('input');
+              if (input) {
+                input.disabled = false;
+                input.removeAttribute('disabled');
+
+                // Mark it so the MutationObserver's enforceClientnumDisabled() won't immediately
+                // re-disable it when we append the hidden flag (or other DOM changes in the dialog).
+                input.setAttribute('data-clientnum-unlocked', '1');
+
+                // Visually "open" the padlock
+                var icon = lock.querySelector('i');
+                if (icon) {
+                  icon.className = 'icon-unlock';
+                }
+                lock.style.color = '#28a745';
+                lock.title = 'Unlocked for this edit';
+
+                // Tell the backend (User::updateInfo) that the staff member explicitly unlocked it
+                var unlockFlag = document.createElement('input');
+                unlockFlag.type = 'hidden';
+                unlockFlag.name = 'clientnum_unlock';
+                unlockFlag.value = '1';
+                lock.parentNode.appendChild(unlockFlag);
+
+                try { input.focus(); input.select(); } catch (e) {}
+              }
+            });
+          });
+        };
+
         // Observer to detect changes in the popup content
         const observer = new MutationObserver(mutations => {
           for (let mutation of mutations) {
             if (mutation.type === 'childList' || mutation.type === 'subtree') {
               copyEmToInput();
               enforceClientnumDisabled();
+              attachClientnumPadlocks(popup);
             }
           }
         });
@@ -118,6 +165,7 @@ if (osTicket::is_ie())
           observer.observe(popup, { childList: true, subtree: true });
           // Initial run in case content is already present
           enforceClientnumDisabled();
+          attachClientnumPadlocks(popup);
         }
       });
     </script>

@@ -882,6 +882,10 @@ class DynamicFormField extends VerySimpleModel {
             && $this->hasFlag(self::FLAG_AGENT_VIEW);
     }
     function isEditableToUsers() {
+        // Gazelec customization: clientnum is never editable by clients once assigned
+        if ($this->get('name') === 'clientnum') {
+            return false;
+        }
         return $this->isEnabled()
             && $this->hasFlag(self::FLAG_CLIENT_EDIT);
     }

@@ -134,7 +134,8 @@ if ($ticket && $ticket->getOwnerId() == $user->getId())
     <?php
         if (!$forms) $forms = $user->getForms();
         foreach ($forms as $form)
-            $form->render();
+            // Pass mode=edit so padlock logic and other edit-specific behaviors activate
+            $form->render(['mode' => 'edit']);
     ?>
     </table>
     <hr>

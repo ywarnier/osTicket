@@ -97,7 +97,9 @@ Gazelec-specific notes
 
 This fork includes a filesystem-based client number reservation system under `include/tmp/clientnum-reservations/`. The directory (and its contents) must remain writable by the web server user. Reservation files are runtime-only and ignored by git.
 
-Reservations expire after 10 minutes of inactivity. This timeout can be adjusted in `include/class.clientnum.php` (constant `EXPIRATION`).
+Reservations expire after 10 minutes of inactivity by default (configurable via `CLIENTNUM_RESERVATION_EXPIRATION` in `include/ost-config.php`).
+
+The padlock protection for the "Num usager" (clientnum) field (requiring staff to explicitly unlock it before editing) is controlled by `CLIENTNUM_PADLOCK_ENABLED` in `include/ost-config.php`.
 
 License
 -------

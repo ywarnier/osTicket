@@ -22,7 +22,10 @@ class ClientnumReservation
 {
     const RES_DIR = INCLUDE_DIR . 'tmp/clientnum-reservations/';
     const LOCK_FILE = self::RES_DIR . '.lock';
-    const EXPIRATION = 600; // 10 minutes
+
+    // Default expiration in seconds (used if not overridden in ost-config.php)
+    // See CLIENTNUM_RESERVATION_EXPIRATION in include/ost-config.php
+    const DEFAULT_EXPIRATION = 600; // 10 minutes
 
     /**
      * Returns a reserved clientnum for this staff + session.
@@ -92,7 +95,7 @@ class ClientnumReservation
                 @unlink($file);
                 continue;
             }
-            if (($now - $data['reserved_at']) > self::EXPIRATION) {
+            if (($now - $data['reserved_at']) > self::getExpiration()) {
                 @unlink($file);
             }
         }
@@ -160,7 +163,7 @@ class ClientnumReservation
 
             if ((int)$data['staff_id'] === (int)$staffId &&
                 $data['session_id'] === $sessionId &&
-                ($now - $data['reserved_at']) < self::EXPIRATION) {
+                ($now - $data['reserved_at']) < self::getExpiration()) {
                 // extract number from filename
                 if (preg_match('/(\d{8})\.res$/', $file, $m)) {
                     return $m[1];
@@ -193,7 +196,7 @@ class ClientnumReservation
             if (preg_match('/(\d{8})\.res$/', $file, $m)) {
                 $num = (int)$m[1];
                 $data = @json_decode(@file_get_contents($file), true);
-                if ($data && ($now - $data['reserved_at']) < self::EXPIRATION) {
+                if ($data && ($now - $data['reserved_at']) < self::getExpiration()) {
                     $reserved[$num] = true;
                 } else {
                     // stale file, clean it
@@ -215,5 +218,16 @@ class ClientnumReservation
         // Fallback when we cannot reserve (no lock, etc.)
         $user = new User();
         return $user->getNewClientNum();
+    }
+
+    /**
+     * Returns the current reservation expiration time in seconds.
+     * Reads from ost-config.php if the constant is defined.
+     */
+    private static function getExpiration()
+    {
+        return defined('CLIENTNUM_RESERVATION_EXPIRATION')
+            ? CLIENTNUM_RESERVATION_EXPIRATION
+            : self::DEFAULT_EXPIRATION;
     }
 }

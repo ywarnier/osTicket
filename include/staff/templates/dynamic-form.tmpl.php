@@ -1,6 +1,12 @@
 <?php
 global $thisstaff;
 
+// Gazelec customization: Control the padlock feature for clientnum field in admin edits.
+// The value is taken from ost-config.php if defined, otherwise defaults to true.
+if (!defined('CLIENTNUM_PADLOCK_ENABLED')) {
+    define('CLIENTNUM_PADLOCK_ENABLED', true);
+}
+
 $isCreate = (isset($options['mode']) && $options['mode'] == 'create');
 
 if (isset($options['entry']) && $options['mode'] == 'edit'
@@ -53,6 +59,19 @@ if (isset($options['entry']) && $options['mode'] == 'edit') { ?>
         catch (Exception $e) {
             // Not connected to a DynamicFormField
         }
+
+        // Gazelec: compute once whether this clientnum field needs padlock protection
+        // (read-only + explicit unlock) in staff edit context. We do this early so we
+        // can force the disabled attribute on the input during render.
+        $__clientnum_protect = false;
+        if (CLIENTNUM_PADLOCK_ENABLED
+                && $field->getLocal('name') === 'clientnum'
+                && !$isCreate
+                && $field->getClean()
+                && (!empty($options['staff']) || !empty($GLOBALS['thisstaff']))) {
+            $__clientnum_protect = true;
+        }
+
         ?>
         <tr><?php if ($field->isBlockLevel()) { ?>
                 <td colspan="2">
@@ -67,6 +86,17 @@ if (isset($options['entry']) && $options['mode'] == 'edit') { ?>
             }
 
             if ($field->isEditableToStaff() || $isCreate) {
+                if ($__clientnum_protect) {
+                    // Force disabled + reliable data marker at render time for the edit-user
+                    // dialog (ticket details -> user -> edit icon). This ensures the input
+                    // is non-editable in the initial HTML, unlike the create path which uses
+                    // configuration['disabled'] in DynamicFormEntry::create().
+                    if (!isset($field->ht['attributes']) || !is_array($field->ht['attributes'])) {
+                        $field->ht['attributes'] = [];
+                    }
+                    $field->ht['attributes']['data-clientnum-field'] = 'true';
+                    $field->ht['attributes']['disabled'] = 'disabled';
+                }
                 $field->render($options); ?>
                 <?php if (!$field->isBlockLevel() && $field->isRequiredForStaff()) { ?>
                     <span class="error">*</span>
@@ -108,6 +138,17 @@ if (isset($options['entry']) && $options['mode'] == 'edit') { ?>
                 }
                 foreach ($field->errors() as $e) { ?>
                     <div class="error"><?php echo Format::htmlchars($e); ?></div>
+                <?php }
+
+                // Gazelec customization: Padlock for clientnum field in admin edits.
+                // Uses pre-computed flag so the input could be forced disabled during render.
+                // Only admins (isAdmin()) get the clickable padlock; other staff see the
+                // field as read-only with no unlock path.
+                if ($__clientnum_protect && $thisstaff && $thisstaff->isAdmin()) {
+                    ?>
+                    <span class="clientnum-padlock" data-clientnum-padlock="1" style="margin-left: 8px; cursor: pointer; color: #888;" title="Click padlock to allow editing of Num usager for this save">
+                        <i class="icon-lock"></i>
+                    </span>
                 <?php }
             } else {
                 $val = '';
