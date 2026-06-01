@@ -16,6 +16,8 @@ class CronManager extends Module {
     function run($args, $options) {
         Bootstrap::connect();
         $ost = osTicket::start();
+        global $cfg;
+        $cfg = $ost->getConfig();
 
         switch (strtolower($args[0])) {
         case 'fetch':
