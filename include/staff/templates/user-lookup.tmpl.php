@@ -117,7 +117,7 @@ $(function() {
             if (last_req) last_req.abort();
             last_req = $.ajax({
                 url: "ajax.php/users<?php
-                    echo $info['lookup'] ? "/{$info['lookup']}" : '' ?>?q="+query,
+                    echo $info['lookup'] ? "/{$info['lookup']}" : '' ?>?q="+encodeURIComponent(query),
                 dataType: 'json',
                 success: function (data) {
                     typeahead.process(data);

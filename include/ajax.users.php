@@ -58,11 +58,12 @@ class UsersAjaxAPI extends AjaxController {
 
         if (!$type || !strcasecmp($type, 'local')) {
 
-            $users = User::objects()
-                ->values_flat('id', 'name', 'default_email__address')
-                ->limit($limit);
-
             if ($fulltext) {
+                // Full-text path: column set is managed by the searcher, use
+                // getExtraDataById for the display fields to avoid column-count conflicts.
+                $users = User::objects()
+                    ->values_flat('id', 'name', 'default_email__address')
+                    ->limit($limit);
                 global $ost;
                 $users = $ost->searcher->find($q, $users);
                 $users->order_by(new SqlCode('__relevance__'), QuerySet::DESC)
@@ -73,43 +74,79 @@ class UsersAjaxAPI extends AjaxController {
                     $_REQUEST['q'] = $q."*";
                     return $this->search($type, $fulltext);
                 }
-            } else {
-                $base = clone $users;
-                $users->filter(array('name__contains' => $q));
-                $users->union($base->copy()->filter(array(
-                                'org__name__contains' => $q)), false);
-                $users->union($base->copy()->filter(array(
-                                'emails__address__contains' => $q)),  false);
-                $users->union($base->copy()->filter(array(
-                                'account__username__contains' => $q)), false);
-                if (UserForm::getInstance()->getField('phone')) {
-                      $users->union($base->copy()->filter(array(
-                                'cdata__phone__contains' => $q)), false);
+
+                // Omit already-imported remote users
+                if ($emails = array_filter($emails)) {
+                    $users->union(User::objects()
+                        ->values_flat('id', 'name', 'default_email__address')
+                        ->filter(array('emails__address__in' => $emails)));
                 }
-            }
 
-            // Omit already-imported remote users
-            if ($emails = array_filter($emails)) {
-                $users->union(User::objects()
-                    ->values_flat('id', 'name', 'default_email__address')
-                    ->filter(array(
-                        'emails__address__in' => $emails
-                )));
-            }
-
-            foreach ($users as $U) {
-                list($id, $name, $email) = $U;
-                foreach ($matches as $i=>$u) {
-                    if ($u['email'] == $email) {
-                        unset($matches[$i]);
-                        break;
+                foreach ($users as $U) {
+                    list($id, $name, $email) = $U;
+                    foreach ($matches as $i=>$u) {
+                        if ($u['email'] == $email) {
+                            unset($matches[$i]);
+                            break;
+                        }
                     }
+                    $name = Format::htmlchars(new UsersName($name));
+                    $extra = User::getExtraDataById($id);
+                    $info = strtoupper($name).', '.($extra['firstname'] ?? '').' ('.($extra['clientnum'] ?? '').')';
+                    $matches[] = array('email'=>$email, 'name'=>$name, 'info'=>$info,
+                        "id" => $id, "/bin/true" => $q);
                 }
-                $name = Format::htmlchars(new UsersName($name));
-                $extra = User::getExtraDataById($id);
-                $info = strtoupper($name).', '.$extra['firstname'].' ('.$extra['clientnum'].')';
-                $matches[] = array('email'=>$email, 'name'=>$name, 'info'=>$info,
-                    "id" => $id, "/bin/true" => $q);
+            } else {
+                // Standard search: fetch cdata fields via JOIN for display.
+                // Split on '+' for multi-term AND search (e.g. "Lonfils+Aug");
+                // spaces are NOT used as separators because names may contain spaces.
+                $users = User::objects()
+                    ->values_flat('id', 'name', 'default_email__address', 'cdata__firstname', 'cdata__clientnum')
+                    ->limit($limit);
+
+                $terms = array_values(array_filter(array_map('trim', explode('+', $q))));
+
+                $has_firstname = (bool) UserForm::getInstance()->getField('firstname');
+                $has_clientnum = (bool) UserForm::getInstance()->getField('clientnum');
+                $has_phone     = (bool) UserForm::getInstance()->getField('phone');
+
+                foreach ($terms as $term) {
+                    $filter = Q::any(array(
+                        'name__contains'              => $term,
+                        'org__name__contains'         => $term,
+                        'emails__address__contains'   => $term,
+                        'account__username__contains' => $term,
+                    ));
+                    if ($has_firstname)
+                        $filter->add(array('cdata__firstname__contains' => $term));
+                    if ($has_clientnum)
+                        $filter->add(array('cdata__clientnum__contains' => $term));
+                    if ($has_phone)
+                        $filter->add(array('cdata__phone__contains' => $term));
+
+                    $users->filter($filter);
+                }
+
+                // Fold in already-imported remote users matched by email
+                if ($emails = array_filter($emails)) {
+                    $users->union(User::objects()
+                        ->values_flat('id', 'name', 'default_email__address', 'cdata__firstname', 'cdata__clientnum')
+                        ->filter(array('emails__address__in' => $emails)));
+                }
+
+                foreach ($users as $U) {
+                    list($id, $name, $email, $cdata_firstname, $cdata_clientnum) = $U;
+                    foreach ($matches as $i=>$u) {
+                        if ($u['email'] == $email) {
+                            unset($matches[$i]);
+                            break;
+                        }
+                    }
+                    $name = Format::htmlchars(new UsersName($name));
+                    $info = strtoupper($name).', '.($cdata_firstname ?: '').' ('.($cdata_clientnum ?: '').')';
+                    $matches[] = array('email'=>$email, 'name'=>$name, 'info'=>$info,
+                        "id" => $id, "/bin/true" => $q);
+                }
             }
             usort($matches, function($a, $b) { return strcmp($a['name'], $b['name']); });
         }

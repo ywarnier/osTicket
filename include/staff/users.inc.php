@@ -9,73 +9,36 @@ $users = User::objects()
     ->annotate(array('ticket_count'=>SqlAggregate::COUNT('tickets')));
 
 if ($_REQUEST['query']) {
-    $search = $_REQUEST['query'];
-    
-    // Split query to handle "firstname lastname" searches
-    $queryParts = preg_split('/\s+/', trim($search), 2);
-    
-    if (count($queryParts) === 2) {
-        // Two-part search: try "firstname lastname" and "lastname firstname"
-        $part1 = $queryParts[0];
-        $part2 = $queryParts[1];
-        
-        // Build filter for two-part search
+    $search = trim($_REQUEST['query']);
+
+    // Split on '+' for multi-term AND search (e.g. "Lonfils+Aug").
+    // Spaces are NOT used as separators because lastnames and firstnames
+    // may themselves contain spaces.
+    // Each term is trimmed; empty terms (e.g. from "a++b") are ignored.
+    $terms = array_values(array_filter(array_map('trim', explode('+', $search))));
+
+    $has_firstname = (bool) UserForm::getInstance()->getField('firstname');
+    $has_clientnum = (bool) UserForm::getInstance()->getField('clientnum');
+    $has_phone     = (bool) UserForm::getInstance()->getField('phone');
+
+    foreach ($terms as $term) {
+        // Each term produces one OR-block; all OR-blocks are ANDed together
+        // by chaining filter() calls on the QuerySet.
         $filter = Q::any(array(
-            // Email contains full query
-            'emails__address__contains' => $search,
-            // Organization name contains full query
-            'org__name__contains' => $search,
-            // Name contains either part
-            'name__contains' => $part1,
-            'name__contains' => $part2,
+            'name__contains'             => $term,
+            'emails__address__contains'  => $term,
+            'org__name__contains'        => $term,
         ));
-        
-        // Add firstname search combinations if field exists
-        if (UserForm::getInstance()->getField('firstname')) {
-            // Try part1 in name AND part2 in firstname
-            $filter->add(Q::all(array(
-                'name__contains' => $part1,
-                'cdata__firstname__contains' => $part2
-            )));
-            
-            // Try part2 in name AND part1 in firstname
-            $filter->add(Q::all(array(
-                'name__contains' => $part2,
-                'cdata__firstname__contains' => $part1
-            )));
-            
-            // Try firstname contains either part
-            $filter->add(array('cdata__firstname__contains' => $part1));
-            $filter->add(array('cdata__firstname__contains' => $part2));
-        }
-        
-        // Add phone search if field exists
-        if (UserForm::getInstance()->getField('phone')) {
-            $filter->add(array('cdata__phone__contains' => $search));
-        }
-        
-        $users->filter($filter);
-    } else {
-        // Single-word search
-        $filter = Q::any(array(
-            'emails__address__contains' => $search,
-            'name__contains' => $search,
-            'org__name__contains' => $search,
-        ));
-        
-        // Add firstname search if field exists
-        if (UserForm::getInstance()->getField('firstname')) {
-            $filter->add(array('cdata__firstname__contains' => $search));
-        }
-        
-        // Add phone search if field exists
-        if (UserForm::getInstance()->getField('phone')) {
-            $filter->add(array('cdata__phone__contains' => $search));
-        }
-        
+        if ($has_firstname)
+            $filter->add(array('cdata__firstname__contains' => $term));
+        if ($has_clientnum)
+            $filter->add(array('cdata__clientnum__contains' => $term));
+        if ($has_phone)
+            $filter->add(array('cdata__phone__contains' => $term));
+
         $users->filter($filter);
     }
-    
+
     $qs += array('query' => $_REQUEST['query']);
 }
 
@@ -336,10 +299,10 @@ if ($total) {
 
 <script type="text/javascript">
 $(function() {
-    $('input#basic-user-search').typeahead({
+    $('input#basic-user-search').removeData('typeahead').typeahead({
         source: function (typeahead, query) {
             $.ajax({
-                url: "ajax.php/users/local?q="+query,
+                url: "ajax.php/users/local?q="+encodeURIComponent(query),
                 dataType: 'json',
                 success: function (data) {
                     typeahead.process(data);
