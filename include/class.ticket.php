@@ -195,7 +195,7 @@ implements RestrictedAccess, Threadable, Searchable {
             'Welcome' =>
             /* @trans */ 'Accueil',
             'Other' =>
-            /* @trans */ 'Other',
+            /* @trans */ 'Suivi',
             );
 
     var $lastMsgId;

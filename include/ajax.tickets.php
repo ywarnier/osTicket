@@ -734,6 +734,9 @@ class TicketsAjaxAPI extends AjaxController {
                     case $field instanceof BooleanField:
                         $clean = $field->toString($field->getClean());
                         break;
+                    case $field instanceof ChoiceField:
+                        $clean = $field->toString($field->getClean());
+                        break;
                     default:
                         $clean =  $field->getClean();
                         $clean = is_array($clean) ? implode(',', $clean) :
