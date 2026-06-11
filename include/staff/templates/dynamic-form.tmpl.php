@@ -86,6 +86,19 @@ if (isset($options['entry']) && $options['mode'] == 'edit') { ?>
             }
 
             if ($field->isEditableToStaff() || $isCreate) {
+                // Gazelec: always tag the clientnum field on the impl that actually
+                // renders, so the central enforcer + hidden-mirror logic in
+                // header.inc.php can find it. DynamicFormEntry::create() sets this on
+                // the ORM field, but the marker is lost before getImpl() rebuilds the
+                // impl (the answer construction builds the impl first), which is why
+                // the create modal previously rendered the field with no marker and
+                // the reserved number was never submitted.
+                if ($field->getLocal('name') === 'clientnum') {
+                    if (!isset($field->ht['attributes']) || !is_array($field->ht['attributes'])) {
+                        $field->ht['attributes'] = [];
+                    }
+                    $field->ht['attributes']['data-clientnum-field'] = 'true';
+                }
                 if ($__clientnum_protect) {
                     // Force disabled + reliable data marker at render time for the edit-user
                     // dialog (ticket details -> user -> edit icon). This ensures the input

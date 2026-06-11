@@ -111,6 +111,34 @@ else { ?>
 </div>
 <script type="text/javascript">
 $(function() {
+    // Gazelec: ensure the reserved clientnum still posts even though the visible
+    // field is disabled (disabled inputs are not submitted). Prefer the central
+    // implementation from header.inc.php; fall back to an equivalent local one so
+    // this works regardless of the container the lookup form renders into.
+    function ensureClientnumMirror(input) {
+        if (window.ensureClientnumMirror && window.ensureClientnumMirror !== ensureClientnumMirror) {
+            return window.ensureClientnumMirror(input);
+        }
+        if (!input) return;
+        var name = input.getAttribute('name');
+        if (!name || !input.parentNode) return;
+        var mirror = input.parentNode.querySelector('input[type="hidden"][data-clientnum-mirror="1"]');
+        if (!mirror) {
+            mirror = document.createElement('input');
+            mirror.type = 'hidden';
+            mirror.setAttribute('data-clientnum-mirror', '1');
+            input.parentNode.appendChild(mirror);
+        }
+        if (input.disabled) {
+            mirror.setAttribute('name', name);
+            mirror.disabled = false;
+            mirror.value = input.value;
+        } else {
+            mirror.removeAttribute('name');
+            mirror.disabled = true;
+        }
+    }
+
     var last_req;
     $('#user-search').typeahead({
         source: function (typeahead, query) {
@@ -169,6 +197,10 @@ $(function() {
                         if ($field[0]) {
                             $field[0].disabled = true;
                         }
+                        // Tag the field + keep a hidden mirror so the (disabled) value
+                        // still posts — disabled inputs are not submitted with the form.
+                        $field.attr('data-clientnum-field', 'true');
+                        ensureClientnumMirror($field[0]);
                         console.log('[gazelc clientnum] Filled + disabled synchronously', $field[0]);
 
                         // Also keep the derived fake email (@example.com) in sync with the new clientnum
@@ -203,6 +235,8 @@ $(function() {
                                 $inp.prop('disabled', true);
                                 $inp.attr('disabled', 'disabled');
                                 if ($inp[0]) $inp[0].disabled = true;
+                                $inp.attr('data-clientnum-field', 'true');
+                                ensureClientnumMirror($inp[0]);
                                 console.log('[gazelc clientnum] Filled + disabled via fallback', $inp[0]);
                                 $field = $inp;
                             }

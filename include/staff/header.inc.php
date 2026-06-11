@@ -103,6 +103,47 @@ if (osTicket::is_ie())
           }
         }
 
+        // Gazelec: disabled inputs are NOT submitted with the form. The clientnum /
+        // "num usager" field is rendered disabled (create form, edit padlock, JS reveal),
+        // which previously caused the reserved number to be silently dropped on save
+        // (clientnum stored empty while the derived @example.com email was kept). To fix
+        // this without re-enabling the visible field, we keep a hidden "mirror" input
+        // alongside it carrying the same name+value. The mirror submits ONLY while the
+        // visible field is disabled; once the field is unlocked/editable the mirror is
+        // silenced so it can never clobber a deliberate edit.
+        window.ensureClientnumMirror = function ensureClientnumMirror(input) {
+          if (!input) return;
+          var name = input.getAttribute('name');
+          if (!name) return;
+          var parent = input.parentNode;
+          if (!parent) return;
+          var mirror = parent.querySelector('input[type="hidden"][data-clientnum-mirror="1"]');
+          if (!mirror) {
+            mirror = document.createElement('input');
+            mirror.type = 'hidden';
+            mirror.setAttribute('data-clientnum-mirror', '1');
+            parent.appendChild(mirror);
+          }
+          if (input.disabled) {
+            // Visible field won't post -> mirror carries the value under the field's name.
+            mirror.setAttribute('name', name);
+            mirror.disabled = false;
+            mirror.value = input.value;
+          } else {
+            // Visible field posts its own (possibly edited) value -> silence the mirror
+            // to avoid a duplicate-name collision that could overwrite the edit.
+            mirror.removeAttribute('name');
+            mirror.disabled = true;
+          }
+        }
+
+        window.syncClientnumMirrors = function syncClientnumMirrors(root) {
+          root = root || document;
+          root.querySelectorAll('input[data-clientnum-field="true"]').forEach(function(input) {
+            window.ensureClientnumMirror(input);
+          });
+        }
+
         // Wire up Gazelec clientnum padlock (click-to-unlock) icons.
         // We centralize this here (instead of inline <script> after the span) because
         // document.currentScript and inline script execution are unreliable when HTML
@@ -142,6 +183,10 @@ if (osTicket::is_ie())
                 unlockFlag.value = '1';
                 lock.parentNode.appendChild(unlockFlag);
 
+                // The field is now editable -> silence its hidden mirror so the staff
+                // member's edit (the live visible value) is what actually posts.
+                if (window.ensureClientnumMirror) window.ensureClientnumMirror(input);
+
                 try { input.focus(); input.select(); } catch (e) {}
               }
             });
@@ -155,6 +200,7 @@ if (osTicket::is_ie())
               copyEmToInput();
               enforceClientnumDisabled();
               attachClientnumPadlocks(popup);
+              syncClientnumMirrors(popup);
             }
           }
         });
@@ -166,6 +212,7 @@ if (osTicket::is_ie())
           // Initial run in case content is already present
           enforceClientnumDisabled();
           attachClientnumPadlocks(popup);
+          syncClientnumMirrors(popup);
         }
       });
     </script>
